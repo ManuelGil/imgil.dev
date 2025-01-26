@@ -1,0 +1,329 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<Layout title="Manuel Gil - Software Developer & Open Source Advocate">
+  <main class="container mx-auto px-4 pt-20">
+    <!-- Hero Section -->
+    <section class="flex min-h-screen items-center justify-center py-20">
+      <div class="max-w-3xl text-center">
+        <h1
+          class="mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-6xl font-bold text-transparent"
+        >
+          Welcome to My Open Source Journey
+        </h1>
+        <p class="mb-8 text-xl text-zinc-400">
+          Building tools that empower developers and foster collaboration in the
+          open source community.
+        </p>
+        <div class="flex justify-center space-x-4">
+          <a
+            href="https://github.com/sponsors/ManuelGil"
+            class="rounded-lg border border-primary/20 bg-primary/10 px-6 py-3 text-primary transition-colors hover:bg-primary/20"
+          >
+            GitHub Sponsors
+          </a>
+          <a
+            href="https://www.paypal.com/paypalme/ManuelFGil"
+            class="rounded-lg border border-accent/20 bg-accent/10 px-6 py-3 text-accent transition-colors hover:bg-accent/20"
+          >
+            ☕ Support via PayPal
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="mx-auto mb-32 max-w-3xl">
+      <div class="space-y-6">
+        <h2 class="mb-6 text-4xl font-bold">Hi, I'm Manuel Gil</h2>
+        <p class="text-lg text-zinc-400">
+          An Indie Maker, open source advocate, and software developer with over
+          8 years of experience. I specialize in creating tools that simplify
+          workflows, empower developers, and foster collaboration within the
+          developer community.
+        </p>
+
+        <div class="mt-12 grid gap-12 md:grid-cols-2">
+          <div>
+            <h3 class="mb-4 text-xl font-bold text-primary">Key Expertise</h3>
+            <ul class="space-y-2 text-zinc-400">
+              <li class="flex items-center">
+                <span class="mr-2 text-primary">▹</span>
+                Advanced knowledge of <strong class="text-zinc-200"
+                  >TypeScript</strong
+                >, <strong class="text-zinc-200">Angular</strong>, <strong
+                  class="text-zinc-200">Vue.js</strong
+                >, <strong class="text-zinc-200">NestJS</strong>, and <strong
+                  class="text-zinc-200">PHP</strong
+                >
+              </li>
+              <li class="flex items-center">
+                <span class="mr-2 text-primary">▹</span>
+                Expertise in backend development and scalable software design
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="mb-4 text-xl font-bold text-primary">Achievements</h3>
+            <ul class="space-y-2 text-zinc-400">
+              <li class="flex items-center">
+                <span class="mr-2 text-primary">▹</span>
+                Creator of widely used VS Code extensions
+              </li>
+              <li class="flex items-center">
+                <span class="mr-2 text-primary">▹</span>
+                Active contributor and organizer in tech communities
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about-me" class="mx-auto mb-32 max-w-3xl">
+      <h2 class="mb-6 text-4xl font-bold">About Me</h2>
+      <div class="space-y-6">
+        <p class="text-lg text-zinc-400">
+          I'm passionate about building tools that solve real problems for
+          developers. Through open source, I actively contribute to innovation,
+          collaboration, and education.
+        </p>
+
+        <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
+          <h3 class="mb-4 text-xl font-bold text-primary">
+            Why Sponsor My Work?
+          </h3>
+          <ul class="space-y-2 text-zinc-400">
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              Maintain and improve open source tools
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              Develop new projects that enhance developer productivity
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              Share knowledge through events and community initiatives
+            </li>
+          </ul>
+          <a
+            href="https://github.com/sponsors/ManuelGil"
+            class="mt-6 inline-block rounded-lg border border-primary/20 bg-primary/10 px-6 py-3 text-primary transition-colors hover:bg-primary/20"
+          >
+            💖 Sponsor My Work
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="mb-32">
+      <h2 class="mb-12 text-4xl font-bold">Projects</h2>
+
+      <div class="space-y-16">
+        <div>
+          <h3 class="mb-6 text-2xl font-bold text-primary">Featured Tools</h3>
+          <div class="grid gap-6 md:grid-cols-3">
+            <ProjectCard
+              title="JSON Flow"
+              description="A powerful VS Code extension for visualizing and managing JSON files."
+              details={[
+                'Simplifies JSON data workflows',
+                'Supports multiple structured data formats',
+              ]}
+              link="https://github.com/ManuelGil"
+            />
+            <ProjectCard
+              title="Auto Barrel for VSCode"
+              description="Automated TypeScript barrel file generator."
+              details={[
+                'Simplifies and organizes module exports',
+                'Ideal for TypeScript-based projects',
+              ]}
+              link="https://github.com/ManuelGil"
+            />
+            <ProjectCard
+              title="Mustache"
+              description="Boosts productivity when working with the Mustache template engine in VS Code."
+              details={['Provides syntax highlighting and essential snippets']}
+              link="https://github.com/ManuelGil"
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3 class="mb-6 text-2xl font-bold text-primary">
+            Other Notable Projects
+          </h3>
+          <ul class="space-y-2 text-zinc-400">
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              Angular File Generator: Create Angular components, services, and modules
+              instantly
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              NestJS File Generator: Generate modules, services, and controllers
+              for NestJS with ease
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              Astro File Generator: Streamlines file generation for AstroJS projects
+            </li>
+          </ul>
+          <a
+            href="https://github.com/ManuelGil"
+            class="mt-4 inline-block text-primary transition-colors hover:text-primary-dark"
+          >
+            See All Projects →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community-contributions" class="mb-32">
+      <h2 class="mb-12 text-4xl font-bold">Community Contributions</h2>
+
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
+          <h3 class="mb-4 text-2xl font-bold text-primary">Vue JS Colombia</h3>
+          <p class="mb-4 text-zinc-400">
+            Founder and organizer of this vibrant community for JavaScript and
+            Vue.js enthusiasts.
+          </p>
+          <ul class="mb-6 space-y-2 text-zinc-400">
+            <li class="flex items-center">
+              <span class="mr-2 text-primary">▹</span>
+              Hosts online and in-person events to share knowledge and foster collaboration
+            </li>
+          </ul>
+          <a
+            href="#"
+            class="text-primary transition-colors hover:text-primary-dark"
+          >
+            Join Vue JS Colombia →
+          </a>
+        </div>
+
+        <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
+          <h3 class="mb-4 text-2xl font-bold text-primary">r/ColombiaDevs</h3>
+          <p class="text-zinc-400">
+            A dedicated member of this active developer community, promoting
+            collaboration and technical discussions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Speaking Section -->
+    <section id="speaking-engagements" class="mb-32">
+      <h2 class="mb-6 text-4xl font-bold">Speaking Engagements</h2>
+      <p class="mb-6 text-lg text-zinc-400">
+        I've presented at events like <strong class="text-zinc-200"
+          >CCOSS</strong
+        >, focusing on open source, developer tools, and best practices in
+        software development.
+      </p>
+      <a
+        href="https://sessionize.com/imgildev"
+        class="text-primary transition-colors hover:text-primary-dark"
+      >
+        View My Speaker Profile →
+      </a>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support-my-work" class="mb-32">
+      <h2 class="mb-6 text-4xl font-bold">Support My Work</h2>
+      <p class="mb-8 text-lg text-zinc-400">
+        Your sponsorship helps me maintain open source projects, create new
+        developer-focused tools, and share educational content with the
+        community.
+      </p>
+      <div class="flex space-x-4">
+        <a
+          href="https://github.com/sponsors/ManuelGil"
+          class="rounded-lg border border-primary/20 bg-primary/10 px-6 py-3 text-primary transition-colors hover:bg-primary/20"
+        >
+          💖 GitHub Sponsors
+        </a>
+        <a
+          href="https://www.paypal.com/paypalme/ManuelFGil"
+          class="rounded-lg border border-accent/20 bg-accent/10 px-6 py-3 text-accent transition-colors hover:bg-accent/20"
+        >
+          ☕ Support via PayPal
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-me" class="mb-32">
+      <h2 class="mb-6 text-4xl font-bold">Contact Me</h2>
+      <p class="mb-8 text-lg text-zinc-400">Let's connect and collaborate!</p>
+      <ul class="space-y-4">
+        <li>
+          <a
+            href="https://github.com/ManuelGil"
+            class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+          >
+            GitHub: ManuelGil
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-1 h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/in/imgildev"
+            class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+          >
+            LinkedIn: Manuel Gil
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-1 h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+          >
+            Vue JS Colombia: Join Now
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-1 h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+</Layout>

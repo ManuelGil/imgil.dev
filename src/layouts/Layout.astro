@@ -1,0 +1,77 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Manuel Gil - Software Developer & Open Source Advocate"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-zinc-900 text-zinc-100">
+    <nav
+      class="fixed top-0 z-50 w-full border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-sm"
+    >
+      <div class="container mx-auto px-4 py-4">
+        <ul class="flex justify-center space-x-8">
+          <li>
+            <a
+              href="#"
+              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              >Home</a>
+          </li>
+          <li>
+            <a
+              href="#about-me"
+              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              >About</a>
+          </li>
+          <li>
+            <a
+              href="#projects"
+              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              >Projects</a>
+          </li>
+          <li>
+            <a
+              href="#community-contributions"
+              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              >Community</a>
+          </li>
+          <li>
+            <a
+              href="#support-my-work"
+              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              >Sponsor</a>
+          </li>
+          <li>
+            <a
+              href="#contact-me"
+              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              >Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <slot />
+    <footer class="mt-16 border-t border-zinc-800 py-8">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-sm text-zinc-400">
+          Built with ❤️ for the developer community. Together, we build the
+          future of tech.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
