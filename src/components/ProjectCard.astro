@@ -1,12 +1,12 @@
 ---
 interface Props {
-  title: string;
-  description: string;
-  link: string;
-  details?: string[];
+  title: string
+  description: string
+  link: string
+  details?: string[]
 }
 
-const { title, description, link, details = [] } = Astro.props;
+const { title, description, link, details = [] } = Astro.props
 ---
 
 <div
@@ -29,6 +29,8 @@ const { title, description, link, details = [] } = Astro.props;
   <a
     href={link}
     class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+    target="_blank"
+    rel="noopener noreferrer"
   >
     View on GitHub
     <svg

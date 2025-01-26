@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import Layout from '../layouts/Layout.astro'
+import ProjectCard from '../components/ProjectCard.astro'
 ---
 
 <Layout title="Manuel Gil - Software Developer & Open Source Advocate">
@@ -14,19 +14,23 @@ import ProjectCard from '../components/ProjectCard.astro';
           Welcome to My Open Source Journey
         </h1>
         <p class="mb-8 text-xl text-zinc-400">
-          Building tools that empower developers and foster collaboration in the
-          open source community.
+          Building tools that empower developers and foster collaboration in the open source
+          community.
         </p>
         <div class="flex justify-center space-x-4">
           <a
             href="https://github.com/sponsors/ManuelGil"
             class="rounded-lg border border-primary/20 bg-primary/10 px-6 py-3 text-primary transition-colors hover:bg-primary/20"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub Sponsors
           </a>
           <a
             href="https://www.paypal.com/paypalme/ManuelFGil"
             class="rounded-lg border border-accent/20 bg-accent/10 px-6 py-3 text-accent transition-colors hover:bg-accent/20"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             ☕ Support via PayPal
           </a>
@@ -39,10 +43,9 @@ import ProjectCard from '../components/ProjectCard.astro';
       <div class="space-y-6">
         <h2 class="mb-6 text-4xl font-bold">Hi, I'm Manuel Gil</h2>
         <p class="text-lg text-zinc-400">
-          An Indie Maker, open source advocate, and software developer with over
-          8 years of experience. I specialize in creating tools that simplify
-          workflows, empower developers, and foster collaboration within the
-          developer community.
+          An Indie Maker, open source advocate, and software developer with over 8 years of
+          experience. I specialize in creating tools that simplify workflows, empower developers,
+          and foster collaboration within the developer community.
         </p>
 
         <div class="mt-12 grid gap-12 md:grid-cols-2">
@@ -51,13 +54,7 @@ import ProjectCard from '../components/ProjectCard.astro';
             <ul class="space-y-2 text-zinc-400">
               <li class="flex items-center">
                 <span class="mr-2 text-primary">▹</span>
-                Advanced knowledge of <strong class="text-zinc-200"
-                  >TypeScript</strong
-                >, <strong class="text-zinc-200">Angular</strong>, <strong
-                  class="text-zinc-200">Vue.js</strong
-                >, <strong class="text-zinc-200">NestJS</strong>, and <strong
-                  class="text-zinc-200">PHP</strong
-                >
+                Advanced knowledge of TypeScript, Angular, VueJS, NestJS Java, and PHP
               </li>
               <li class="flex items-center">
                 <span class="mr-2 text-primary">▹</span>
@@ -82,44 +79,6 @@ import ProjectCard from '../components/ProjectCard.astro';
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about-me" class="mx-auto mb-32 max-w-3xl">
-      <h2 class="mb-6 text-4xl font-bold">About Me</h2>
-      <div class="space-y-6">
-        <p class="text-lg text-zinc-400">
-          I'm passionate about building tools that solve real problems for
-          developers. Through open source, I actively contribute to innovation,
-          collaboration, and education.
-        </p>
-
-        <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
-          <h3 class="mb-4 text-xl font-bold text-primary">
-            Why Sponsor My Work?
-          </h3>
-          <ul class="space-y-2 text-zinc-400">
-            <li class="flex items-center">
-              <span class="mr-2 text-primary">▹</span>
-              Maintain and improve open source tools
-            </li>
-            <li class="flex items-center">
-              <span class="mr-2 text-primary">▹</span>
-              Develop new projects that enhance developer productivity
-            </li>
-            <li class="flex items-center">
-              <span class="mr-2 text-primary">▹</span>
-              Share knowledge through events and community initiatives
-            </li>
-          </ul>
-          <a
-            href="https://github.com/sponsors/ManuelGil"
-            class="mt-6 inline-block rounded-lg border border-primary/20 bg-primary/10 px-6 py-3 text-primary transition-colors hover:bg-primary/20"
-          >
-            💖 Sponsor My Work
-          </a>
-        </div>
-      </div>
-    </section>
-
     <!-- Projects Section -->
     <section id="projects" class="mb-32">
       <h2 class="mb-12 text-4xl font-bold">Projects</h2>
@@ -135,7 +94,7 @@ import ProjectCard from '../components/ProjectCard.astro';
                 'Simplifies JSON data workflows',
                 'Supports multiple structured data formats',
               ]}
-              link="https://github.com/ManuelGil"
+              link="https://github.com/ManuelGil/vscode-json-flow"
             />
             <ProjectCard
               title="Auto Barrel for VSCode"
@@ -144,31 +103,27 @@ import ProjectCard from '../components/ProjectCard.astro';
                 'Simplifies and organizes module exports',
                 'Ideal for TypeScript-based projects',
               ]}
-              link="https://github.com/ManuelGil"
+              link="https://github.com/ManuelGil/vscode-auto-barrel"
             />
             <ProjectCard
               title="Mustache"
               description="Boosts productivity when working with the Mustache template engine in VS Code."
               details={['Provides syntax highlighting and essential snippets']}
-              link="https://github.com/ManuelGil"
+              link="https://github.com/ManuelGil/vscode-mustache-snippets"
             />
           </div>
         </div>
 
         <div>
-          <h3 class="mb-6 text-2xl font-bold text-primary">
-            Other Notable Projects
-          </h3>
+          <h3 class="mb-6 text-2xl font-bold text-primary">Other Notable Projects</h3>
           <ul class="space-y-2 text-zinc-400">
             <li class="flex items-center">
               <span class="mr-2 text-primary">▹</span>
-              Angular File Generator: Create Angular components, services, and modules
-              instantly
+              Angular File Generator: Create Angular components, services, and modules instantly
             </li>
             <li class="flex items-center">
               <span class="mr-2 text-primary">▹</span>
-              NestJS File Generator: Generate modules, services, and controllers
-              for NestJS with ease
+              NestJS File Generator: Generate modules, services, and controllers for NestJS with ease
             </li>
             <li class="flex items-center">
               <span class="mr-2 text-primary">▹</span>
@@ -176,8 +131,10 @@ import ProjectCard from '../components/ProjectCard.astro';
             </li>
           </ul>
           <a
-            href="https://github.com/ManuelGil"
+            href="https://github.com/ManuelGil?tab=repositories"
             class="mt-4 inline-block text-primary transition-colors hover:text-primary-dark"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             See All Projects →
           </a>
@@ -186,15 +143,14 @@ import ProjectCard from '../components/ProjectCard.astro';
     </section>
 
     <!-- Community Section -->
-    <section id="community-contributions" class="mb-32">
+    <!-- <section id="community-contributions" class="mb-32">
       <h2 class="mb-12 text-4xl font-bold">Community Contributions</h2>
 
       <div class="grid gap-8 md:grid-cols-2">
         <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
           <h3 class="mb-4 text-2xl font-bold text-primary">Vue JS Colombia</h3>
           <p class="mb-4 text-zinc-400">
-            Founder and organizer of this vibrant community for JavaScript and
-            Vue.js enthusiasts.
+            Founder and organizer of this vibrant community for JavaScript and Vue.js enthusiasts.
           </p>
           <ul class="mb-6 space-y-2 text-zinc-400">
             <li class="flex items-center">
@@ -202,10 +158,7 @@ import ProjectCard from '../components/ProjectCard.astro';
               Hosts online and in-person events to share knowledge and foster collaboration
             </li>
           </ul>
-          <a
-            href="#"
-            class="text-primary transition-colors hover:text-primary-dark"
-          >
+          <a href="#" class="text-primary transition-colors hover:text-primary-dark">
             Join Vue JS Colombia →
           </a>
         </div>
@@ -213,25 +166,25 @@ import ProjectCard from '../components/ProjectCard.astro';
         <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
           <h3 class="mb-4 text-2xl font-bold text-primary">r/ColombiaDevs</h3>
           <p class="text-zinc-400">
-            A dedicated member of this active developer community, promoting
-            collaboration and technical discussions.
+            A dedicated member of this active developer community, promoting collaboration and
+            technical discussions.
           </p>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Speaking Section -->
     <section id="speaking-engagements" class="mb-32">
       <h2 class="mb-6 text-4xl font-bold">Speaking Engagements</h2>
       <p class="mb-6 text-lg text-zinc-400">
-        I've presented at events like <strong class="text-zinc-200"
-          >CCOSS</strong
-        >, focusing on open source, developer tools, and best practices in
-        software development.
+        I've presented at events like <strong class="text-zinc-200">CCOSS</strong>, focusing on open
+        source, developer tools, and best practices in software development.
       </p>
       <a
         href="https://sessionize.com/imgildev"
         class="text-primary transition-colors hover:text-primary-dark"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         View My Speaker Profile →
       </a>
@@ -241,20 +194,23 @@ import ProjectCard from '../components/ProjectCard.astro';
     <section id="support-my-work" class="mb-32">
       <h2 class="mb-6 text-4xl font-bold">Support My Work</h2>
       <p class="mb-8 text-lg text-zinc-400">
-        Your sponsorship helps me maintain open source projects, create new
-        developer-focused tools, and share educational content with the
-        community.
+        Your sponsorship helps me maintain open source projects, create new developer-focused tools,
+        and share educational content with the community.
       </p>
       <div class="flex space-x-4">
         <a
           href="https://github.com/sponsors/ManuelGil"
           class="rounded-lg border border-primary/20 bg-primary/10 px-6 py-3 text-primary transition-colors hover:bg-primary/20"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           💖 GitHub Sponsors
         </a>
         <a
           href="https://www.paypal.com/paypalme/ManuelFGil"
           class="rounded-lg border border-accent/20 bg-accent/10 px-6 py-3 text-accent transition-colors hover:bg-accent/20"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           ☕ Support via PayPal
         </a>
@@ -270,6 +226,8 @@ import ProjectCard from '../components/ProjectCard.astro';
           <a
             href="https://github.com/ManuelGil"
             class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub: ManuelGil
             <svg
@@ -289,6 +247,8 @@ import ProjectCard from '../components/ProjectCard.astro';
           <a
             href="https://www.linkedin.com/in/imgildev"
             class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             LinkedIn: Manuel Gil
             <svg
@@ -306,10 +266,12 @@ import ProjectCard from '../components/ProjectCard.astro';
         </li>
         <li>
           <a
-            href="#"
+            href="https://twitter.com/imgildev"
             class="inline-flex items-center text-primary transition-colors hover:text-primary-dark"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Vue JS Colombia: Join Now
+            Twitter: Manuel Gil
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="ml-1 h-4 w-4"
