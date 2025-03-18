@@ -50,11 +50,19 @@ const { title, description, keywords } = Astro.props
   <body class="bg-zinc-900 text-zinc-100">
     <nav class="fixed top-0 z-50 w-full border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
       <div class="container mx-auto px-4 py-4">
-        <ul class="flex justify-center space-x-8">
+        <div class="flex items-center justify-between md:hidden">
+          <a href="/" class="text-lg font-bold">Manuel Gil</a>
+          <button id="menu-toggle" class="text-zinc-100 hover:text-primary focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+        <ul id="mobile-menu" class="hidden flex-col space-y-4 pt-4 md:flex md:flex-row md:items-center md:justify-center md:space-x-8 md:space-y-0 md:pt-0">
           <li>
             <a
               href="/"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary">Home</a
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary">Home</a
             >
           </li>
           <li>
@@ -62,48 +70,60 @@ const { title, description, keywords } = Astro.props
               href="https://manuelgil.me"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary"
               >Open Source Projects</a
             >
           </li>
           <li>
             <a
               href="/talks--communities"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary"
               >Talks & Communities</a
             >
           </li>
           <li>
             <a
               href="/how-to-support"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary"
               >How to Support</a
             >
           </li>
           <li>
             <a
               href="/why-sponsor"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary"
               >Why Sponsor?</a
             >
           </li>
           <li>
             <a
               href="/sponsors"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary"
               >Sponsors</a
             >
           </li>
           <li>
             <a
               href="/about-me"
-              class="text-sm uppercase tracking-wider transition-colors hover:text-primary"
+              class="block text-sm uppercase tracking-wider transition-colors hover:text-primary"
               >About Me</a
             >
           </li>
         </ul>
       </div>
     </nav>
+
+    <script>
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    </script>
+
     <slot />
     <footer class="mt-16 border-t border-zinc-800 py-8">
       <div class="container mx-auto px-4 text-center">
