@@ -1,0 +1,48 @@
+---
+// Reading progress bar that shows how much the user has read
+---
+
+<div
+  class="reading-progress-container fixed left-0 top-0 z-50 h-1 w-full bg-zinc-900/50 backdrop-blur-sm"
+>
+  <div
+    id="reading-progress-bar"
+    class="h-full w-0 bg-gradient-to-r from-primary to-accent transition-all duration-100"
+  >
+  </div>
+</div>
+
+<script>
+  // Script that calculates and updates reading progress
+  document.addEventListener('DOMContentLoaded', () => {
+    const progressBar = document.getElementById('reading-progress-bar')
+    const article = document.querySelector('article')
+
+    if (!progressBar || !article) return
+
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const scrollHeight = article.scrollHeight
+      const clientHeight = document.documentElement.clientHeight
+
+      // Calculate progress percentage
+      const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100
+
+      // Limit percentage between 0 and 100
+      const boundedPercentage = Math.min(100, Math.max(0, scrollPercentage))
+
+      // Update progress bar width
+      progressBar.style.width = `${boundedPercentage}%`
+    }
+
+    // Update progress on page load and scroll
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+  })
+</script>
+
+<style>
+  .reading-progress-container {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+</style>

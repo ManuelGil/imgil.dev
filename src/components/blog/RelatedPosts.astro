@@ -1,0 +1,88 @@
+---
+// Component that displays related posts based on tags
+import { getCollection } from 'astro:content'
+
+interface Props {
+  tags: string[]
+  currentSlug: string
+  limit?: number
+}
+
+const { tags = [], currentSlug, limit = 3 } = Astro.props
+
+// Get all blog posts
+const allPosts = await getCollection('blog')
+
+// Filter out the current post and posts without published date
+const otherPosts = allPosts.filter((post) => post.slug !== currentSlug && post.data.pubDate)
+
+// Find related posts by matching tags
+const relatedPosts = otherPosts
+  .map((post) => {
+    // Calculate how many tags match
+    const matchingTags = tags.filter((tag) => post.data.tags && post.data.tags.includes(tag))
+
+    return {
+      post,
+      matchCount: matchingTags.length,
+    }
+  })
+  .filter((item) => item.matchCount > 0) // Only include posts with matching tags
+  .sort((a, b) => {
+    // Sort by number of matching tags (descending)
+    if (b.matchCount !== a.matchCount) {
+      return b.matchCount - a.matchCount
+    }
+
+    // If same number of matching tags, sort by date (newest first)
+    return new Date(b.post.data.pubDate).getTime() - new Date(a.post.data.pubDate).getTime()
+  })
+  .slice(0, limit) // Limit the number of related posts
+  .map((item) => item.post)
+
+// If there aren't enough related posts by tags, add recent posts
+let postsToShow = [...relatedPosts]
+if (postsToShow.length < limit) {
+  // Sort other posts by date (newest first)
+  const recentPosts = otherPosts
+    .filter((post) => !relatedPosts.some((rp) => rp.slug === post.slug))
+    .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+    .slice(0, limit - postsToShow.length)
+
+  postsToShow = [...postsToShow, ...recentPosts]
+}
+
+// Format date function
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(new Date(date))
+}
+---
+
+{
+  postsToShow.length > 0 && (
+    <div class="related-posts mt-12 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <h3 class="mb-6 text-xl font-bold text-zinc-100">Related Articles</h3>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {postsToShow.map((post) => (
+          <a
+            href={`/blog/${post.slug}`}
+            class="group flex flex-col rounded-lg border border-zinc-800 bg-zinc-900/30 p-4 transition-all hover:border-zinc-700 hover:bg-zinc-800/50 hover:shadow-lg hover:shadow-primary/5"
+          >
+            <h4 class="line-clamp-2 font-medium text-zinc-200 group-hover:text-primary">
+              {post.data.title}
+            </h4>
+
+            <p class="mt-2 line-clamp-2 text-sm text-zinc-400">{post.data.description}</p>
+
+            <div class="mt-auto pt-4 text-xs text-zinc-500">{formatDate(post.data.pubDate)}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  )
+}

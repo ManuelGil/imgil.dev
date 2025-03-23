@@ -1,0 +1,114 @@
+---
+// Component that automatically generates a table of contents based on article headings
+---
+
+<div class="toc">
+  <ul id="toc-list" class="space-y-2 text-sm"></ul>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const article = document.querySelector('.article-content')
+    const tocList = document.getElementById('toc-list')
+
+    if (!article || !tocList) return
+
+    // Get all h2 and h3 headings from the article
+    const headings = Array.from(article.querySelectorAll('h2, h3'))
+
+    if (headings.length === 0) {
+      // If there are no headings, hide the table of contents
+      const tocContainer = document.querySelector('.toc')?.closest('.sticky')
+      if (tocContainer) {
+        ;(tocContainer as HTMLElement).style.display = 'none'
+      }
+      return
+    }
+
+    // Assign IDs to headings if they don't have them
+    headings.forEach((heading, index) => {
+      if (!heading.id) {
+        const id = heading.textContent
+          ?.toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-')
+        heading.id = `heading-${id || index}`
+      }
+
+      // Create list item for the table of contents
+      const listItem = document.createElement('li')
+      const link = document.createElement('a')
+
+      link.href = `#${heading.id}`
+      link.textContent = heading.textContent
+      link.className =
+        heading.tagName === 'H2'
+          ? 'block text-zinc-300 hover:text-primary transition-colors'
+          : 'block pl-4 text-zinc-400 hover:text-primary transition-colors text-sm'
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        // Smooth scroll to heading
+        heading.scrollIntoView({ behavior: 'smooth' })
+
+        // Update URL with hash
+        history.pushState(null, '', link.href)
+      })
+
+      listItem.appendChild(link)
+      tocList.appendChild(listItem)
+    })
+
+    // Highlight active heading when scrolling
+    const observerOptions = {
+      rootMargin: '-80px 0px -80% 0px',
+      threshold: 0,
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id
+        const tocItem = document.querySelector(`.toc a[href="#${id}"]`)
+
+        if (tocItem) {
+          if (entry.isIntersecting) {
+            // Remove active class from all links
+            document.querySelectorAll('.toc a').forEach((a) => {
+              a.classList.remove('text-primary', 'font-medium')
+            })
+
+            // Add active class to current link
+            tocItem.classList.add('text-primary', 'font-medium')
+          }
+        }
+      })
+    }, observerOptions)
+
+    // Observe all headings
+    headings.forEach((heading) => observer.observe(heading))
+  })
+</script>
+
+<style>
+  .toc {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 107, 0, 0.3) rgba(39, 39, 42, 0.3);
+  }
+
+  .toc::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .toc::-webkit-scrollbar-track {
+    background: rgba(39, 39, 42, 0.3);
+    border-radius: 4px;
+  }
+
+  .toc::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 107, 0, 0.3);
+    border-radius: 4px;
+  }
+</style>
