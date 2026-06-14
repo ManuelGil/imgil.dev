@@ -1,46 +1,52 @@
-// Utility to get related blog posts by tag and date
-import type { BlogPost } from '../types/blog'
+import type { CollectionEntry } from 'astro:content'
+
+type BlogPost = CollectionEntry<'blog'>
 
 /**
- * Obtiene posts relacionados por tags y fecha. Usa 'url' como identificador único.
- * @param posts Lista de posts
- * @param currentUrl URL del post actual (en vez de slug)
- * @param tags Tags del post actual
- * @param limit Máximo de posts relacionados a devolver
+ * Obtiene posts relacionados utilizando coincidencia de tags.
+ * Si no existen suficientes coincidencias, completa con posts recientes.
  */
 export function getRelatedPosts(
   posts: BlogPost[],
-  currentUrl: string,
+  currentSlug: string,
   tags: string[],
-  limit: number = 3,
+  limit = 3,
 ): BlogPost[] {
-  const otherPosts = posts.filter((post) => post.url !== currentUrl && post.frontmatter.date)
-  const relatedPosts = otherPosts
-    .map((post) => {
-      const matchCount = post.frontmatter.tags?.filter((tag) => tags.includes(tag)).length || 0
-      return { post, matchCount }
-    })
-    .filter((item) => item.matchCount > 0)
-    .sort((a, b) => {
-      if (b.matchCount !== a.matchCount) {
-        return b.matchCount - a.matchCount
-      }
-      return (
-        new Date(b.post.frontmatter.date).getTime() - new Date(a.post.frontmatter.date).getTime()
-      )
-    })
-    .slice(0, limit)
-    .map((item) => item.post)
+  const otherPosts = posts.filter(
+    (post) => post.slug !== currentSlug && !post.data.draft,
+  )
 
-  // If not enough related, add recent posts
-  if (relatedPosts.length < limit) {
-    const recentPosts = otherPosts
-      .filter((post) => !relatedPosts.some((rp) => rp.url === post.url))
-      .sort(
-        (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
+  const related = otherPosts
+    .map((post) => ({
+      post,
+      score:
+        post.data.tags?.filter((tag) => tags.includes(tag)).length ?? 0,
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score
+      }
+
+      return (
+        (b.post.data.pubDate?.getTime() ?? 0) -
+        (a.post.data.pubDate?.getTime() ?? 0)
       )
-      .slice(0, limit - relatedPosts.length)
-    return [...relatedPosts, ...recentPosts]
+    })
+    .map(({ post }) => post)
+
+  if (related.length >= limit) {
+    return related.slice(0, limit)
   }
-  return relatedPosts
+
+  const recentPosts = otherPosts
+    .filter((post) => !related.some((item) => item.slug === post.slug))
+    .sort(
+      (a, b) =>
+        (b.data.pubDate?.getTime() ?? 0) -
+        (a.data.pubDate?.getTime() ?? 0),
+    )
+    .slice(0, limit - related.length)
+
+  return [...related, ...recentPosts]
 }

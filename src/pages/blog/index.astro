@@ -5,13 +5,13 @@
  * Implements all performance optimizations including content-visibility
  */
 import { getCollection } from 'astro:content'
-import Container from '../../components/critical/Container.astro'
-import Hero from '../../components/critical/Hero.astro'
-import BlogPostList from '../../components/non-critical/BlogPostList.astro'
-import TagCloud from '../../components/non-critical/TagCloud.astro'
-import { siteConfig } from '../../data/config/site'
 import Layout from '../../layouts/Layout.astro'
 import { generateSeoMetadata } from '../../utils/seo-metadata'
+import { siteConfig } from '../../config/site'
+import Container from '../../components/site/Container.astro'
+import Hero from '../../components/Hero.astro'
+import BlogPostList from '../../components/blog/BlogPostList.astro'
+import TagCloud from '../../components/blog/TagCloud.astro'
 
 // Handle pagination
 const page = parseInt(Astro.url.searchParams.get('page') || '1')
@@ -19,7 +19,7 @@ const postsPerPage = 6
 
 // Get all blog posts sorted by date
 const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 )
 
 // Pagination calculations
@@ -80,7 +80,6 @@ const seo = generateSeoMetadata({
             title="All Posts"
             currentPage={page}
             totalPages={totalPages}
-
           />
         </div>
       </div>
@@ -99,7 +98,7 @@ const seo = generateSeoMetadata({
                     })
                     return acc
                   },
-                  {} as Record<string, number>
+                  {} as Record<string, number>,
                 )}
                 title="Browse by Topic"
               />

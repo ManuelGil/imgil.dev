@@ -4,12 +4,9 @@
  *
  * @component
  */
-import {
-  formatDate,
-  sortPostsByDate,
-} from '../../utils/blog-utils'
-import Section from '../critical/Section.astro'
-import SectionHeader from '../critical/SectionHeader.astro'
+import { formatDate, sortPostsByDate } from '../../utils/blog-utils'
+import Section from '../site/Section.astro'
+import SectionHeader from '../site/SectionHeader.astro'
 
 type Props = {
   posts: Array<{

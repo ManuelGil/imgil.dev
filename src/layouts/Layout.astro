@@ -21,9 +21,9 @@
  * </Layout>
  * ```
  */
-import Footer from '../components/critical/Footer.astro'
-import Navigation from '../components/critical/Navigation.astro'
-import { siteConfig } from '../data/config/site'
+import Footer from '../components/site/Footer.astro'
+import Navigation from '../components/site/Navigation.astro'
+import { siteConfig } from '../config/site'
 import '../styles/global.css'
 
 /**
@@ -41,7 +41,7 @@ interface Props {
   /**
    * Comma-separated keywords for SEO
    */
-  keywords: string
+  keywords?: string
   /**
    * Open Graph image path for social sharing (optional)
    * If not provided, defaults to the site's avatar image

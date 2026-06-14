@@ -2,11 +2,11 @@
 /**
  * Home page — record of what exists and how it is carried
  */
-import Container from '../components/critical/Container.astro'
-import Hero from '../components/critical/Hero.astro'
-import Section from '../components/critical/Section.astro'
-import SectionHeader from '../components/critical/SectionHeader.astro'
-import { siteConfig } from '../data/config/site'
+import Hero from '../components/Hero.astro'
+import Container from '../components/site/Container.astro'
+import Section from '../components/site/Section.astro'
+import SectionHeader from '../components/site/SectionHeader.astro'
+import { siteConfig } from '../config/site'
 import Layout from '../layouts/Layout.astro'
 import { generateSeoMetadata } from '../utils/seo-metadata'
 
@@ -37,15 +37,15 @@ const seo = generateSeoMetadata({
       <SectionHeader title="What This Work Looks Like" />
       <div class="space-y-6">
         <p class="text-lg text-zinc-400">
-          I started teaching myself to code at a young age. Over the years that turned into
-          building tools — mostly VSCode extensions, npm packages, and small utilities — that
-          other developers started using.
+          I started teaching myself to code at a young age. Over the years that turned into building
+          tools — mostly VSCode extensions, npm packages, and small utilities — that other
+          developers started using.
         </p>
         <p class="mt-4 text-lg text-zinc-400">
-          Some of what I do now is maintenance — updating dependencies, fixing what breaks,
-          keeping things compatible where I can. Not all projects get the same attention.
-          Some are active, some are slow, some are carried quietly. I take responsibility
-          for what I publish, but I don't offer support or guaranteed availability.
+          Some of what I do now is maintenance — updating dependencies, fixing what breaks, keeping
+          things compatible where I can. Not all projects get the same attention. Some are active,
+          some are slow, some are carried quietly. I take responsibility for what I publish, but I
+          don't offer support or guaranteed availability.
         </p>
 
         <div class="mt-12 grid gap-12 md:grid-cols-2">
@@ -126,13 +126,10 @@ const seo = generateSeoMetadata({
       <p class="mb-6 text-lg text-zinc-400">
         I've spoken at events like <strong class="text-zinc-200">CCOSS</strong>, <strong
           class="text-zinc-200">FLISoL</strong
-        >, and <strong class="text-zinc-200">Nerdearla</strong>, mostly about open source and
-        the tools I've built. I do it when I have something worth sharing, not on a schedule.
+        >, and <strong class="text-zinc-200">Nerdearla</strong>, mostly about open source and the
+        tools I've built. I do it when I have something worth sharing, not on a schedule.
       </p>
-      <a
-        href="/talks-communities"
-        class="text-primary transition-colors hover:text-primary-dark"
-      >
+      <a href="/talks-communities" class="text-primary transition-colors hover:text-primary-dark">
         More about talks →
       </a>
     </Section>
@@ -144,8 +141,8 @@ const seo = generateSeoMetadata({
         description="If these tools are useful to you and you want them to keep existing, you can help."
       />
       <p class="mb-6 text-lg text-zinc-400">
-        Sponsorship doesn't buy features, access, or priority. It helps offset the personal
-        time and cost of carrying these tools forward.
+        Sponsorship doesn't buy features, access, or priority. It helps offset the personal time and
+        cost of carrying these tools forward.
       </p>
       <div class="flex space-x-4">
         <a

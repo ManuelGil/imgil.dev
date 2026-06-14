@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import { siteConfig } from '../data/config/site';
+import { siteConfig } from '../config/site';
 
 export async function GET() {
   const baseUrl = siteConfig.baseUrl || 'https://imgil.dev';

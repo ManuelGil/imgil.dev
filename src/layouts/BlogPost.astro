@@ -3,13 +3,11 @@ import { Image } from 'astro:assets'
 import { format } from 'date-fns'
 import FontPreload from './FontPreload.astro'
 import Layout from './Layout.astro'
-
-// Import blog components
-import ReadingProgressBar from '../components/non-critical/ReadingProgressBar.astro'
-import ReadingTime from '../components/non-critical/ReadingTime.astro'
-import RelatedPosts from '../components/non-critical/RelatedPosts.astro'
-import ShareButtons from '../components/non-critical/ShareButtons.astro'
-import TableOfContents from '../components/non-critical/TableOfContents.astro'
+import ReadingProgressBar from '../components/blog/ReadingProgressBar.astro'
+import ReadingTime from '../components/blog/ReadingTime.astro'
+import RelatedPosts from '../components/blog/RelatedPosts.astro'
+import TableOfContents from '../components/blog/TableOfContents.astro'
+import ShareButtons from '../components/blog/ShareButtons.astro'
 
 // Calculate reading time
 function calculateReadingTime(content) {

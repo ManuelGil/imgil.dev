@@ -14,7 +14,7 @@
  * <Navigation currentPath={Astro.url.pathname} />
  * ```
  */
-import { mainNavItems } from '../../data/config/navigation'
+import { mainNavItems } from '../../config/navigation'
 
 interface Props {
   /**
@@ -182,7 +182,7 @@ const navItems = mainNavItems
           }
         })
       },
-      { threshold: 1.0 }
+      { threshold: 1.0 },
     )
 
     // Create a sentinel element at the top of the page

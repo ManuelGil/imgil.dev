@@ -5,13 +5,13 @@
  * Uses getStaticPaths for pre-rendering to improve performance
  */
 import { getCollection } from 'astro:content'
-import Container from '../../../components/critical/Container.astro'
-import Hero from '../../../components/critical/Hero.astro'
-import BlogPostList from '../../../components/non-critical/BlogPostList.astro'
-import TagCloud from '../../../components/non-critical/TagCloud.astro'
-import { siteConfig } from '../../../data/config/site'
 import Layout from '../../../layouts/Layout.astro'
 import { generateSeoMetadata } from '../../../utils/seo-metadata'
+import { siteConfig } from '../../../config/site'
+import Container from '../../../components/site/Container.astro'
+import Hero from '../../../components/Hero.astro'
+import TagCloud from '../../../components/blog/TagCloud.astro'
+import BlogPostList from '../../../components/blog/BlogPostList.astro'
 
 // Export getStaticPaths function for pre-rendering tag pages
 export async function getStaticPaths() {
@@ -62,7 +62,7 @@ const tagCounts = allTags.reduce(
     acc[tag] = allPosts.filter((post) => post.data.tags?.includes(tag)).length
     return acc
   },
-  {} as Record<string, number>
+  {} as Record<string, number>,
 )
 
 // Generate SEO metadata
