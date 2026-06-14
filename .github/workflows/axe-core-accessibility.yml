@@ -1,0 +1,29 @@
+name: Accessibility (axe-core)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Build site
+        run: npm run build
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      - name: Run axe-core accessibility tests
+        run: |
+          npx playwright test
+          npx axe-playwright https://imgil.dev
+      - name: Run Lighthouse CI
+        run: |
+          npx @lhci/cli autorun --collect.url=https://imgil.dev

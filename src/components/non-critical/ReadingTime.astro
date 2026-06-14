@@ -5,9 +5,15 @@ interface Props {
 }
 
 const { readingTime } = Astro.props
+
+// Format reading time to handle singular/plural
+const formattedTime = `${readingTime} ${readingTime === 1 ? 'min' : 'mins'} read`
 ---
 
-<div class="reading-time flex items-center gap-1 text-sm text-zinc-400">
+<div
+  class="reading-time flex items-center gap-1 text-sm text-zinc-400"
+  title={`Estimated reading time: ${formattedTime}`}
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="h-4 w-4 text-primary"
@@ -17,6 +23,8 @@ const { readingTime } = Astro.props
     aria-hidden="true"
     width="16"
     height="16"
+    role="img"
+    aria-label="Clock icon"
   >
     <path
       stroke-linecap="round"
@@ -24,5 +32,5 @@ const { readingTime } = Astro.props
       stroke-width="2"
       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
   </svg>
-  <span>{readingTime} min read</span>
+  <span>{formattedTime}</span>
 </div>

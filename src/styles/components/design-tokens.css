@@ -1,0 +1,43 @@
+/*
+  Design tokens for imgil.dev
+  These variables complement existing Tailwind classes
+  and are designed to work alongside current optimizations.
+*/
+
+:root {
+  /* Colores primarios (basados en el tema actual) */
+  --color-primary: #ff6b00;
+  --color-primary-dark: #cc5500;
+  --color-primary-light: #ff8533;
+
+  /* Colores de acento */
+  --color-accent: #0066cc;
+  --color-accent-dark: #004c99;
+  --color-accent-light: #3399ff;
+
+  /* Espaciado y dimensiones */
+  --spacing-section: 8rem; /* 128px - for large margins between sections */
+  --spacing-content: 4rem; /* 64px - for internal content spacing */
+  --spacing-component: 2rem; /* 32px - for spacing between components */
+  --spacing-element: 1rem; /* 16px - for spacing between internal elements */
+
+  /* Bordes y esquinas */
+  --radius-sm: 0.375rem; /* 6px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-card: 0.75rem; /* 12px - specific for cards */
+
+  /* Transiciones */
+  --transition-standard: 0.3s ease;
+  --transition-fast: 0.15s ease;
+
+  /* Sombras (complementarias a Tailwind) */
+  --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 
+  Estas variables son totalmente opcionales y complementarias a Tailwind.
+  No afectan ninguna de las optimizaciones actuales de rendimiento.
+*/

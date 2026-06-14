@@ -7,6 +7,9 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Request Process
 
+- Ensure your code follows the project's code style (Prettier, ESLint) and passes all lint checks.
+- Run `npm run format` and `npm run lint` before submitting your PR.
+
 1. Ensure any install or build dependencies are removed before the end of the layer when doing a
    build.
 2. Update the README.md with details of changes to the interface, this includes new environment

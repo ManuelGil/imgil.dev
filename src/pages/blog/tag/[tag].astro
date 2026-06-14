@@ -1,0 +1,169 @@
+---
+/**
+ * Dynamic page to display blog posts filtered by tag
+ * Implements all performance optimizations including content-visibility
+ * Uses getStaticPaths for pre-rendering to improve performance
+ */
+import { getCollection } from 'astro:content'
+import Container from '../../../components/critical/Container.astro'
+import Hero from '../../../components/critical/Hero.astro'
+import BlogPostList from '../../../components/non-critical/BlogPostList.astro'
+import TagCloud from '../../../components/non-critical/TagCloud.astro'
+import { siteConfig } from '../../../data/config/site'
+import Layout from '../../../layouts/Layout.astro'
+import { generateSeoMetadata } from '../../../utils/seo-metadata'
+
+// Export getStaticPaths function for pre-rendering tag pages
+export async function getStaticPaths() {
+  // Get all blog posts
+  const allBlogPosts = await getCollection('blog')
+
+  // Extract all unique tags
+  const allTags = [...new Set(allBlogPosts.flatMap((post) => post.data.tags || []))]
+
+  // Create a path for each tag
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }))
+}
+
+// Get tag from params/props
+const { tag } = Astro.props
+
+// Get all blog posts
+const allPosts = await getCollection('blog')
+
+// Usa directamente los posts originales para BlogPostList
+const filteredPosts = (
+  tag ? allPosts.filter((post) => post.data.tags?.includes(tag)) : allPosts
+).map((post) => ({
+  url: `/blog/${post.slug ?? post.id}`,
+  frontmatter: {
+    title: post.data.title ?? '',
+    description: post.data.description ?? '',
+    date:
+      post.data.pubDate instanceof Date
+        ? post.data.pubDate.toISOString()
+        : (post.data.pubDate ?? ''),
+    updatedDate:
+      post.data.updatedDate instanceof Date
+        ? post.data.updatedDate.toISOString()
+        : (post.data.updatedDate ?? undefined),
+    tags: post.data.tags ?? [],
+    author: post.data.author ?? '',
+  },
+}))
+
+// Extract all unique tags and count posts per tag
+const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))]
+const tagCounts = allTags.reduce(
+  (acc, tag) => {
+    acc[tag] = allPosts.filter((post) => post.data.tags?.includes(tag)).length
+    return acc
+  },
+  {} as Record<string, number>
+)
+
+// Generate SEO metadata
+const title = `Posts tagged with #${tag} | ${siteConfig.name}`
+
+const seo = generateSeoMetadata({
+  title,
+  description: `Articles and tutorials about ${tag} - web development resources by ${siteConfig.name}`,
+  type: 'website',
+  image: siteConfig.ogImage || '/images/og-image.jpg', // Fallback image if not defined
+})
+---
+
+<Layout
+  title={seo.title}
+  description={seo.description}
+  keywords={`blog, tutorials, ${tag}, web development`}
+  ogImage={seo.openGraph.image}
+>
+  <Container className="py-20">
+    {/* Hero section with tag-specific introduction */}
+    <Hero
+      title={`#${tag}`}
+      description={`Posts and articles tagged with #${tag}`}
+      centered={true}
+      maxWidth="md"
+    >
+      <div class="mt-4 flex flex-wrap justify-center gap-2">
+        <a
+          href="/blog"
+          class="rounded-lg border border-zinc-700 bg-zinc-800/50 px-4 py-2 text-zinc-300 transition-colors hover:border-primary/20 hover:bg-primary/10 hover:text-primary"
+        >
+          All Posts
+        </a>
+        {
+          allTags.slice(0, 5).map((categoryTag) => (
+            <a
+              href={`/blog/tag/${categoryTag}`}
+              class={`rounded-lg border px-4 py-2 transition-colors ${categoryTag === tag ? 'border-primary bg-primary/20 text-primary' : 'border-zinc-700 bg-zinc-800/50 text-zinc-300 hover:border-primary/20 hover:bg-primary/10 hover:text-primary'}`}
+            >
+              #{categoryTag}
+            </a>
+          ))
+        }
+      </div>
+    </Hero>
+
+    <div class="mt-16 lg:flex lg:gap-12" id="latest-posts">
+      {/* Main content area */}
+      <div class="lg:w-2/3">
+        <BlogPostList
+          posts={filteredPosts}
+          activeTag={tag}
+          title={`Posts tagged with #${tag}`}
+          currentPage={1}
+          totalPages={1}
+        />
+      </div>
+
+      {/* Sidebar */}
+      <aside class="mt-12 lg:mt-0 lg:w-1/3">
+        <TagCloud tags={allTags} counts={tagCounts} activeTag={tag} title="Browse by Topic" />
+
+        <div
+          class="content-visibility-auto mt-8 rounded-xl border border-zinc-700 bg-zinc-800/50 p-6"
+        >
+          <h3 class="mb-4 text-xl font-bold">Elsewhere</h3>
+          <ul class="space-y-2 text-zinc-400">
+            <li>
+              <a
+                href="https://github.com/ManuelGil"
+                class="transition-colors hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://twitter.com/imgildev"
+                class="transition-colors hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Twitter
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/imgildev"
+                class="transition-colors hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </Container>
+</Layout>

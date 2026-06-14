@@ -1,0 +1,101 @@
+---
+/**
+ * Open Source Projects page
+ * Honest, non-promotional, responsibility-driven view of what exists.
+ */
+import Hero from '../components/critical/Hero.astro'
+import Section from '../components/critical/Section.astro'
+import SectionHeader from '../components/critical/SectionHeader.astro'
+import ContributionItem from '../components/non-critical/ContributionItem.astro'
+import ProjectCategorySection from '../components/non-critical/ProjectCategorySection.astro'
+import { categories, contributionData, projects } from '../data/projects'
+import Layout from '../layouts/Layout.astro'
+import { generateSeoMetadata } from '../utils/seo-metadata'
+
+// SEO metadata (kept neutral, non-promotional)
+const seo = generateSeoMetadata({
+  title: 'Projects',
+  description:
+    'Open source tools and utilities created and carried over time. Some are active, some are slow, some remain stable and quiet.',
+  keywords:
+    'open source, developer tools, vscode extensions, windows utilities, maintenance, tooling',
+})
+---
+
+<Layout title={seo.title} description={seo.description} keywords={seo.keywords}>
+  <div
+    class="content-visibility-auto container mx-auto px-4 pt-20"
+    style="contain-intrinsic-size: 500px"
+  >
+    <!-- Hero -->
+    <Hero
+      title="Projects I've Built and Carried"
+      description="A collection of open source tools created over many years. Some are active, some are paused, some live quietly. This page is a record of things that exist, not a promise of support."
+    />
+
+    <!-- Context / framing -->
+    <Section>
+      <div class="space-y-4 text-zinc-300">
+        <p>
+          These projects were not created as products, startups, or experiments for visibility. Most
+          of them exist because something real was broken, repetitive, or frustrating, and I needed
+          a way to deal with it.
+        </p>
+
+        <p>
+          I don't maintain everything at the same pace. Some projects move slowly. Some stay stable
+          for long periods of time. Some depend more on the community than on me.
+        </p>
+
+        <p>
+          I remain responsible for what I publish here, but I don't offer guaranteed support,
+          timelines, or feature delivery. Silence, pauses, and limited capacity are part of keeping
+          this sustainable.
+        </p>
+
+        <p>This page exists to provide context — not to sell, convert, or promise anything.</p>
+      </div>
+    </Section>
+
+    <!-- Projects by category -->
+    {
+      categories.map((category) => (
+        <ProjectCategorySection category={category} projects={projects} />
+      ))
+    }
+
+    <!-- Other contributions -->
+    <Section>
+      <SectionHeader
+        title="Other Contributions"
+        description="Occasional contributions to other open source projects. These are not ongoing commitments, but moments where I could help, review, or participate."
+      />
+
+      <div class="space-y-8">
+        <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-8">
+          <ul class="content-visibility-auto space-y-4">
+            {
+              contributionData.map((contribution) => (
+                <ContributionItem
+                  title={contribution.title}
+                  description={contribution.description}
+                />
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <a
+          href="https://github.com/ManuelGil"
+          class="text-primary transition-colors hover:text-primary-dark"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          More context and history on GitHub →
+        </a>
+      </div>
+    </Section>
+  </div>
+</Layout>

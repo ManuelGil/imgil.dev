@@ -1,0 +1,70 @@
+---
+/**
+ * Hero component for page headers with consistent styling
+ * Optimized for mobile display with appropriate spacing
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Hero
+ *   title="My Projects"
+ *   description="A collection of my recent work"
+ * >
+ *   <Button href="#projects">View Projects</Button>
+ * </Hero>
+ * ```
+ */
+import Heading from '../critical/Heading.astro'
+import Container from './Container.astro'
+
+interface Props {
+  /**
+   * Main heading text for the hero section
+   */
+  title: string
+  /**
+   * Optional descriptive text displayed below the title
+   */
+  description?: string
+  /**
+   * Whether to center the hero content
+   */
+  centered?: boolean
+  /**
+   * Maximum width constraint for the content
+   */
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+}
+
+const { title, description, centered = true, maxWidth = 'md' } = Astro.props
+
+const containerClasses = {
+  sm: 'max-w-xl',
+  md: 'max-w-3xl',
+  lg: 'max-w-4xl',
+  xl: 'max-w-5xl',
+  '2xl': 'max-w-7xl',
+}[maxWidth]
+
+const alignClass = centered ? 'text-center' : ''
+---
+
+<section
+  class="content-visibility-auto relative overflow-hidden border-b border-zinc-800/5 bg-zinc-900/30 py-24 shadow-[0_10px_20px_-15px_rgba(20,20,33,0.3)] md:py-32"
+>
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(120,40,200,0.015),transparent_70%)]"
+  >
+  </div>
+  <Container>
+    <div class={`mx-auto ${containerClasses} ${alignClass}`}>
+      <Heading level="h1" gradient>
+        {title}
+      </Heading>
+
+      {description && <p class="mb-8 text-xl text-zinc-400">{description}</p>}
+
+      <slot />
+    </div>
+  </Container>
+</section>

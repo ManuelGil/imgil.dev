@@ -2,6 +2,12 @@
 
 This is the source code for my personal website, [imgil.dev](https://imgil.dev). It is built with [Astro](https://astro.build), a modern static site generator that allows you to build faster websites with less JavaScript.
 
+## Quickstart
+
+1. Clone this repository
+2. Run `npm install` to install dependencies
+3. Run `npm run dev` to start the local development server
+
 ## Commands
 
 All commands are run from the root of the project, from a terminal:

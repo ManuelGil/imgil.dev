@@ -1,0 +1,220 @@
+---
+/**
+ * Enhanced navigation component with responsive design and performance optimizations
+ * Implements smooth transitions, visual indicators, and optimal layout for all screen sizes
+ *
+ * Features:
+ * - Smooth mobile menu transitions with transform instead of display property
+ * - Enhanced active/hover states with visual indicators
+ * - Optimized for Core Web Vitals (content-visibility, will-change)
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Navigation currentPath={Astro.url.pathname} />
+ * ```
+ */
+import { mainNavItems } from '../../data/config/navigation'
+
+interface Props {
+  /**
+   * Current active page path
+   */
+  currentPath?: string
+}
+
+const { currentPath = '/' } = Astro.props
+
+// Get actual nav items structure from config
+const navItems = mainNavItems
+---
+
+<nav
+  class="fixed top-0 z-10 w-full border-b border-zinc-800/10 bg-zinc-900/90 shadow-xs backdrop-blur-md will-change-transform"
+>
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex items-center justify-center">
+      <!-- Desktop Navigation -->
+      <div class="hidden max-w-4xl flex-wrap items-center justify-center md:flex">
+        <ul class="flex flex-wrap items-center justify-center gap-1 md:gap-2 lg:gap-4">
+          <!-- Using flex-wrap to ensure multi-line nav items display properly -->
+          {
+            mainNavItems.map((item) => {
+              const isActive =
+                currentPath === item.href ||
+                (currentPath.startsWith(item.href) && item.href !== '/')
+
+              return (
+                <li class="md:text-center">
+                  <a
+                    href={item.href}
+                    class={`px-2 py-2 md:px-3 text-sm md:text-base block rounded-md transition-all duration-200 hover:bg-primary/10 hover:text-primary focus:outline-hidden focus:ring-2 focus:ring-primary/20 ${isActive ? 'text-primary font-medium' : 'text-zinc-300'}`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <span class="whitespace-normal text-center">{item.text}</span>
+                    {isActive && (
+                      <span class="content-visibility-auto mt-0.5 block h-0.5 w-full rounded-full bg-linear-to-r from-primary to-primary/70" />
+                    )}
+                  </a>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
+
+      <!-- Mobile Navigation Toggle - positioned right on mobile -->
+      <button
+        id="mobile-nav-toggle"
+        class="rounded-md p-2 text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-primary focus:outline-hidden focus:ring-2 focus:ring-primary/20 md:hidden"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <!-- Hamburger icon for closed state -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mobile-menu-icon h-6 w-6"
+          width="24"
+          height="24"
+          aria-hidden
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+        <!-- X icon for open state -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mobile-menu-close hidden h-6 w-6"
+          width="24"
+          height="24"
+          aria-hidden
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu (transformed out of view by default) -->
+  <div
+    id="mobile-nav"
+    class="container mx-auto max-h-0 overflow-hidden px-4 py-4 opacity-0 transition-all duration-300 will-change-transform md:hidden"
+  >
+    <ul class="flex flex-col space-y-2 pb-4">
+      {
+        mainNavItems.map((item) => {
+          const isActive =
+            currentPath === item.href || (currentPath.startsWith(item.href) && item.href !== '/')
+
+          return (
+            <li>
+              <a
+                href={item.href}
+                class={`block px-3 py-3 rounded-md transition-all duration-200 hover:bg-primary/10 ${isActive ? 'bg-zinc-800/80 text-primary font-medium' : 'text-zinc-300'}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                <span class="line-clamp-2">{item.text}</span>
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // Enhanced mobile navigation toggle with smooth transitions
+  const toggleBtn = document.getElementById('mobile-nav-toggle')
+  const mobileNav = document.getElementById('mobile-nav')
+  const hamburgerIcon = toggleBtn?.querySelector('.mobile-menu-icon')
+  const closeIcon = toggleBtn?.querySelector('.mobile-menu-close')
+
+  // Mobile menu toggle logic with animations
+  if (toggleBtn && mobileNav && hamburgerIcon && closeIcon) {
+    toggleBtn.addEventListener('click', () => {
+      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true'
+      toggleBtn.setAttribute('aria-expanded', expanded ? 'false' : 'true')
+
+      // Toggle icons
+      hamburgerIcon.classList.toggle('hidden')
+      closeIcon.classList.toggle('hidden')
+
+      // Toggle mobile menu with height transition instead of display:none
+      if (expanded) {
+        // Closing the menu
+        mobileNav.style.maxHeight = '0'
+        mobileNav.style.opacity = '0'
+        mobileNav.style.paddingTop = '0'
+        mobileNav.style.paddingBottom = '0'
+      } else {
+        // Opening the menu - calculate required height
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + 40 + 'px' // Add padding
+        mobileNav.style.opacity = '1'
+        mobileNav.style.paddingTop = '1rem'
+        mobileNav.style.paddingBottom = '1rem'
+      }
+    })
+  }
+
+  // Handle intersection observation for adding shadow on scroll
+  const nav = document.querySelector('nav')
+  if (nav) {
+    // Use IntersectionObserver to detect when nav is no longer at top
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            nav.classList.add('nav-elevated')
+          } else {
+            nav.classList.remove('nav-elevated')
+          }
+        })
+      },
+      { threshold: 1.0 }
+    )
+
+    // Create a sentinel element at the top of the page
+    const sentinel = document.createElement('div')
+    sentinel.classList.add('nav-sentinel')
+    document.body.prepend(sentinel)
+
+    // Observe the sentinel
+    observer.observe(sentinel)
+  }
+</script>
+
+<style>
+  /* Enhanced nav styles */
+  .nav-elevated {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    background-color: rgba(24, 24, 27, 0.95);
+  }
+
+  .nav-sentinel {
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  /* Optimize animation performance */
+  #mobile-nav {
+    transform: translateZ(0);
+  }
+</style>
+
+<!-- Spacer to compensate for fixed nav -->
+<div class="h-16"></div>

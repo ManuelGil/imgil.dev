@@ -1,0 +1,59 @@
+---
+/**
+ * ProjectCategorySection component for displaying projects grouped by category
+ * Provides a consistent layout for presenting projects within their categories
+ *
+ * @component
+ * @example
+ * ```astro
+ * <ProjectCategorySection
+ *   category={category}
+ *   projects={allProjects}
+ * />
+ * ```
+ */
+import type { Category, Project } from '../../data/projects'
+import Section from '../critical/Section.astro'
+import SectionHeader from '../critical/SectionHeader.astro'
+
+interface Props {
+  /**
+   * Category data including id, name and description
+   */
+  category: Category
+  /**
+   * All projects to filter from
+   */
+  projects: Project[]
+}
+
+const { category, projects } = Astro.props
+
+// Filter projects by category
+const categoryProjects = projects.filter((project) => project.category === category.id)
+
+// If there are no projects in the category, render nothing
+if (categoryProjects.length === 0) return null
+---
+
+<Section>
+  <SectionHeader title={category.name} description={category.description} />
+
+  <ul class="space-y-6">
+    {
+      categoryProjects.map((project) => (
+        <li>
+          <a
+            href={project.link}
+            class="text-zinc-200 transition-colors hover:text-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <strong>{project.title}</strong>
+          </a>
+          <p class="mt-1 text-zinc-400">{project.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

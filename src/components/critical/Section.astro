@@ -1,0 +1,59 @@
+---
+/**
+ * Section component that provides consistent layout structure
+ * with optimized margins and spacing for better visual hierarchy
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Section id="projects" maxWidth="lg">
+ *   <h2>My Projects</h2>
+ *   <p>Collection of work I've done</p>
+ * </Section>
+ * ```
+ */
+// Simple utility to join class names (local replacement for removed utils/styling)
+function classNames(...args: Array<string | undefined | false | null>): string {
+  return args.filter(Boolean).join(' ')
+}
+
+interface Props {
+  /**
+   * Optional ID for the section element (for anchor links)
+   */
+  id?: string
+  /**
+   * Additional CSS classes to apply to the section element
+   */
+  className?: string
+  /**
+   * Maximum width constraint for the inner container
+   * Values correspond to Tailwind max-width classes
+   */
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full' | 'none'
+}
+
+const { id, className = 'mb-32', maxWidth = 'xl' } = Astro.props
+
+// This mapping uses the same Tailwind classes already in the project
+const maxWidthClass =
+  maxWidth === 'none'
+    ? ''
+    : maxWidth === 'full'
+      ? 'w-full'
+      : {
+          sm: 'max-w-xl',
+          md: 'max-w-3xl',
+          lg: 'max-w-4xl',
+          xl: 'max-w-5xl',
+          '2xl': 'max-w-7xl',
+        }[maxWidth]
+
+const sectionClasses = classNames(className)
+---
+
+<section id={id} class={sectionClasses}>
+  <div class={classNames('mx-auto', maxWidthClass)}>
+    <slot />
+  </div>
+</section>

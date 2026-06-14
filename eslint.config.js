@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint'
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,vue}'] },
-  { ignores: ['**/*.d.ts', 'tailwind.config.mjs'] },
+  { ignores: ['**/*.d.ts', 'dist/', 'tailwind.config.mjs'] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,

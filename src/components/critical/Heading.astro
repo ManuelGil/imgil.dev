@@ -1,0 +1,77 @@
+---
+/**
+ * Heading component that provides consistent typography styling
+ * with support for gradient text effects and semantic level overrides
+ *
+ * Optimized for accessibility by maintaining semantic HTML structure
+ * while allowing visual styling flexibility
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Heading level="h1" gradient>
+ *   Welcome to my portfolio
+ * </Heading>
+ * ```
+ *
+ * @example
+ * <!-- Semantic h2 that looks like h1 -->
+ * <Heading level="h2" as="h1">
+ *   Section heading with h1 appearance
+ * </Heading>
+ * ```
+ */
+// Simple utility to join class names (local replacement for removed utils/styling)
+function classNames(...args: Array<string | undefined | false | null>): string {
+  return args.filter(Boolean).join(' ')
+}
+// Utility for gradient text classes (local replacement)
+function gradientText(enabled: boolean): string {
+  return enabled
+    ? 'bg-linear-to-r from-primary-400 to-secondary-500 text-transparent bg-clip-text'
+    : ''
+}
+
+interface Props {
+  /**
+   * Semantic heading level (determines default styling)
+   */
+  level: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  /**
+   * Whether to apply gradient text effect
+   */
+  gradient?: boolean
+  /**
+   * Additional CSS classes to apply
+   */
+  className?: string
+  /**
+   * Optional override for the rendered HTML element
+   * Allows semantic value (level) to differ from visual appearance
+   */
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+}
+
+const { level, as, gradient = false, className = '' } = Astro.props
+
+// Use the specified level or override with 'as' prop
+const Tag = as || level
+
+// Base styles aligned with current design
+const baseClasses = {
+  h1: 'mb-4 leading-[1.2] tracking-tight text-6xl font-bold',
+  h2: 'mb-6 text-4xl font-bold',
+  h3: 'mb-4 text-2xl font-bold',
+  h4: 'mb-2 text-xl font-bold',
+  h5: 'mb-2 text-lg font-bold',
+  h6: 'mb-2 text-base font-bold',
+}[level] // Based on semantic level, not display level
+
+const gradientClass = gradient
+  ? 'bg-linear-to-r from-primary to-accent bg-clip-text text-transparent'
+  : ''
+---
+
+<Tag class={classNames(baseClasses, gradientClass, className)}>
+  <slot />
+</Tag>

@@ -1,0 +1,46 @@
+---
+/**
+ * Container component that provides consistent horizontal padding and width constraints
+ * Used as a layout primitive across the site for content alignment
+ *
+ * Optimized to maintain mobile-first responsive design and preserve
+ * consistent content margins across viewport sizes
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Container>
+ *   <h1>Welcome to my site</h1>
+ *   <p>This content will have proper horizontal padding and max-width</p>
+ * </Container>
+ * ```
+ */
+// Simple utility to join class names (local replacement for removed utils/styling)
+function classNames(...args: Array<string | undefined | false | null>): string {
+  return args.filter(Boolean).join(' ')
+}
+
+interface Props {
+  /**
+   * Additional CSS classes to apply to the container
+   */
+  className?: string
+  /**
+   * When true, removes horizontal padding (for full-bleed sections)
+   */
+  noPadding?: boolean
+  /**
+   * When true, ignores the container max-width constraint
+   */
+  fullWidth?: boolean
+}
+
+const { className = '', noPadding = false, fullWidth = false } = Astro.props
+
+const paddingClass = noPadding ? '' : 'px-4'
+const widthClass = fullWidth ? 'w-full' : 'container'
+---
+
+<div class={classNames(widthClass, 'mx-auto', paddingClass, className)}>
+  <slot />
+</div>

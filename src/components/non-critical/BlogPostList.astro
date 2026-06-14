@@ -1,0 +1,165 @@
+---
+/**
+ * Displays a list of blog posts with pagination support
+ *
+ * @component
+ */
+import {
+  formatDate,
+  sortPostsByDate,
+} from '../../utils/blog-utils'
+import Section from '../critical/Section.astro'
+import SectionHeader from '../critical/SectionHeader.astro'
+
+type Props = {
+  posts: Array<{
+    url: string
+    frontmatter: {
+      title: string
+      description: string
+      date: string
+      tags?: string[]
+    }
+  }>
+  title?: string
+  description?: string
+  currentPage?: number
+  totalPages?: number
+  activeTag?: string
+}
+
+const {
+  posts,
+  title = 'Blog',
+  description,
+  currentPage = 1,
+  totalPages = 1,
+  activeTag,
+} = Astro.props
+
+const sortedPosts = sortPostsByDate(posts)
+---
+
+<Section>
+  <SectionHeader
+    title={activeTag ? `Posts tagged with #${activeTag}` : title}
+    description={description}
+  />
+
+  {/* Posts */}
+  <div class="content-visibility-auto">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        sortedPosts.map((post) => (
+          <a
+            href={post.url}
+            class="group flex flex-col rounded-xl border border-zinc-700 bg-zinc-800/50 p-6 transition-all duration-300 will-change-transform hover:scale-[1.01] hover:bg-zinc-800 hover:shadow-md hover:shadow-primary/5"
+          >
+            <h3 class="mb-3 line-clamp-2 text-lg font-bold transition-colors group-hover:text-primary">
+              {post.frontmatter.title}
+            </h3>
+            <p class="mb-4 line-clamp-3 grow text-sm text-zinc-400">
+              {post.frontmatter.description}
+            </p>
+            <div class="mt-auto flex items-center justify-between">
+              <time datetime={post.frontmatter.date} class="text-xs text-zinc-500">
+                {formatDate(new Date(post.frontmatter.date))}
+              </time>
+              {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+                <span class="text-xs text-primary">#{post.frontmatter.tags[0]}</span>
+              )}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    {/* Pagination */}
+    {
+      totalPages > 1 && (
+        <nav aria-label="Blog pagination" class="mt-12 flex justify-center">
+          <div class="flex items-center space-x-2">
+            {currentPage > 1 && (
+              <a
+                href={
+                  activeTag
+                    ? `/blog/tag/${activeTag}/${currentPage - 1}`
+                    : `/blog/${currentPage - 1}`
+                }
+                class="inline-flex items-center justify-center rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-800"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden
+                  class="mr-1 h-4 w-4"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Previous
+              </a>
+            )}
+
+            <span class="text-sm text-zinc-400">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            {currentPage < totalPages && (
+              <a
+                href={
+                  activeTag
+                    ? `/blog/tag/${activeTag}/${currentPage + 1}`
+                    : `/blog/${currentPage + 1}`
+                }
+                class="inline-flex items-center justify-center rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-800"
+              >
+                Next
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden
+                  class="ml-1 h-4 w-4"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+            )}
+          </div>
+        </nav>
+      )
+    }
+  </div>
+
+  {/* If no posts found */}
+  {
+    sortedPosts.length === 0 && (
+      <div class="rounded-xl border border-zinc-700 bg-zinc-800/50 p-12 text-center">
+        <h3 class="mb-4 text-xl font-bold">No posts found</h3>
+        {activeTag ? (
+          <p class="text-zinc-400">
+            No posts found with the tag #{activeTag}.{' '}
+            <a href="/blog" class="text-primary">
+              View all posts
+            </a>
+          </p>
+        ) : (
+          <p class="text-zinc-400">No posts yet.</p>
+        )}
+      </div>
+    )
+  }
+</Section>

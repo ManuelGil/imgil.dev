@@ -113,7 +113,7 @@ export default {
     hoverOnlyWhenSupported: true,
   },
   experimental: {
-    optimizeUniversalDefaults: true,
+    // optimizeUniversalDefaults: true, // Desactivado para mayor estabilidad
   },
   corePlugins: {
     touchAction: false,

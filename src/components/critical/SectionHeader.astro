@@ -1,0 +1,52 @@
+---
+/**
+ * SectionHeader component for consistent section titles and descriptions
+ * Provides standardized spacing and typography for section introductions
+ *
+ * @component
+ * @example
+ * ```astro
+ * <SectionHeader
+ *   title="Featured Projects"
+ *   description="A selection of my most significant work"
+ *   centered
+ * />
+ * ```
+ */
+import Heading from '../critical/Heading.astro'
+
+interface Props {
+  /**
+   * Section title text
+   */
+  title: string
+  /**
+   * Optional descriptive text below the title
+   */
+  description?: string
+  /**
+   * Whether to center the header content
+   */
+  centered?: boolean
+  /**
+   * Heading level to use for the title
+   */
+  headingLevel?: 'h1' | 'h2' | 'h3'
+  /**
+   * Whether to apply a gradient effect to the title
+   */
+  gradient?: boolean
+}
+
+const { title, description, centered = false, headingLevel = 'h2', gradient = false } = Astro.props
+
+const containerClass = centered ? 'text-center mx-auto max-w-3xl' : ''
+---
+
+<div class={containerClass}>
+  <Heading level={headingLevel} gradient={gradient}>
+    {title}
+  </Heading>
+
+  {description && <p class="mb-10 text-lg text-zinc-400">{description}</p>}
+</div>
