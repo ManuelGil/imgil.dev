@@ -38,7 +38,7 @@ const allPosts = await getCollection('blog')
 const filteredPosts = (
   tag ? allPosts.filter((post) => post.data.tags?.includes(tag)) : allPosts
 ).map((post) => ({
-  url: `/blog/${post.slug ?? post.id}`,
+  url: `/blog/${post.id}`,
   frontmatter: {
     title: post.data.title ?? '',
     description: post.data.description ?? '',

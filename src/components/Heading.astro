@@ -25,12 +25,6 @@
 function classNames(...args: Array<string | undefined | false | null>): string {
   return args.filter(Boolean).join(' ')
 }
-// Utility for gradient text classes (local replacement)
-function gradientText(enabled: boolean): string {
-  return enabled
-    ? 'bg-linear-to-r from-primary-400 to-secondary-500 text-transparent bg-clip-text'
-    : ''
-}
 
 interface Props {
   /**
@@ -52,7 +46,7 @@ interface Props {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
-const { level, as, gradient = false, className = '' } = Astro.props
+const { level, as, gradient = false, className = '' } = Astro.props as Props
 
 // Use the specified level or override with 'as' prop
 const Tag = as || level

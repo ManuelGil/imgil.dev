@@ -34,7 +34,7 @@ const formatDate = (date: Date) => {
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {postsToShow.map((post) => (
           <a
-            href={`/blog/${post.slug}`}
+            href={`/blog/${post.id}`}
             class="group flex flex-col rounded-lg border border-zinc-800 bg-zinc-900/30 p-4 transition-all hover:border-zinc-700 hover:bg-zinc-800/50 hover:shadow-lg hover:shadow-primary/5"
           >
             <h4 class="line-clamp-2 font-medium text-zinc-200 group-hover:text-primary">

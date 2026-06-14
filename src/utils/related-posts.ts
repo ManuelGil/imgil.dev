@@ -13,7 +13,7 @@ export function getRelatedPosts(
   limit = 3,
 ): BlogPost[] {
   const otherPosts = posts.filter(
-    (post) => post.slug !== currentSlug && !post.data.draft,
+    (post) => post.id !== currentSlug && !post.data.draft,
   )
 
   const related = otherPosts
@@ -40,7 +40,7 @@ export function getRelatedPosts(
   }
 
   const recentPosts = otherPosts
-    .filter((post) => !related.some((item) => item.slug === post.slug))
+    .filter((post) => !related.some((item) => item.id === post.id))
     .sort(
       (a, b) =>
         (b.data.pubDate?.getTime() ?? 0) -

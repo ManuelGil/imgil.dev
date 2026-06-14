@@ -19,7 +19,7 @@ export async function GET() {
   const blogPosts = await getCollection('blog');
   const blogRoutes = blogPosts
     .filter(post => !post.data.draft)
-    .map(post => `/blog/${post.slug}/`);
+    .map(post => `/blog/${post.id}/`);
 
   const urls = [...staticRoutes, ...blogRoutes];
 

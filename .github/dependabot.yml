@@ -1,11 +1,14 @@
-# Enable Dependabot for version updates and security alerts
 version: 2
+
 updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
+    open-pull-requests-limit: 5
+
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
+    open-pull-requests-limit: 3

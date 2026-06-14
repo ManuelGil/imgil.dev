@@ -1,25 +1,23 @@
-// Service Worker for offline caching and PWA support
-// Caches essential assets and serves them when offline.
-// Extend this file to add custom caching strategies as needed.
-function cacheAssets() {
-  return caches.open('v1').then((cache) => {
-    return cache.addAll([
-      '/',
-      '/index.html',
-      '/manifest.webmanifest',
-      // Add more static assets as needed
-    ])
-  })
+// Service Worker for offline caching and basic PWA support.
+// Caches a small set of essential assets during installation
+// and serves cached responses when available.
+
+const CACHE_NAME = 'imgil-dev-v1'
+
+async function cacheAssets() {
+  const cache = await caches.open(CACHE_NAME)
+
+  return cache.addAll(['/', '/index.html', '/manifest.webmanifest'])
 }
 
 self.addEventListener('install', (event) => {
   event.waitUntil(cacheAssets())
 })
 
-function fetchHandler(event) {
-  return caches.match(event.request).then((response) => {
-    return response || fetch(event.request)
-  })
+async function fetchHandler(event) {
+  const response = await caches.match(event.request)
+
+  return response || fetch(event.request)
 }
 
 self.addEventListener('fetch', (event) => {

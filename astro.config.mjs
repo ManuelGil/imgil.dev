@@ -30,10 +30,6 @@ export default defineConfig({
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
-          manualChunks: {
-            astro: ['astro:content', 'astro:transitions'],
-            vendor: ['date-fns'],
-          },
           assetFileNames: 'assets/[hash][extname]',
           chunkFileNames: 'assets/[hash].js',
         },

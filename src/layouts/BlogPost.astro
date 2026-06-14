@@ -10,7 +10,7 @@ import TableOfContents from '../components/blog/TableOfContents.astro'
 import ShareButtons from '../components/blog/ShareButtons.astro'
 
 // Calculate reading time
-function calculateReadingTime(content) {
+function calculateReadingTime(content: string) {
   const wordCount = content.split(/\s+/).length
   const readingTime = Math.ceil(wordCount / 200)
   return readingTime
@@ -18,7 +18,7 @@ function calculateReadingTime(content) {
 
 interface Props {
   title: string
-  description: string
+  description?: string
   pubDate?: Date
   updatedDate?: Date
   heroImage?: string
@@ -37,9 +37,6 @@ const {
   keywords,
   tags = [],
 } = Astro.props
-
-// Get the current URL for sharing
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
 // Get the content for reading time calculation
 const content = await Astro.slots.render('default')

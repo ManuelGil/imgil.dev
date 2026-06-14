@@ -30,7 +30,7 @@ const paginatedPosts = allPosts.slice(startIndex, endIndex)
 
 // Mapea los posts a BlogPost[] para BlogPostList
 const posts = paginatedPosts.map((post) => ({
-  url: `/blog/${post.slug ?? post.id}`,
+  url: `/blog/${post.id}`,
   frontmatter: {
     title: post.data.title ?? '',
     description: post.data.description ?? '',
@@ -66,7 +66,7 @@ const seo = generateSeoMetadata({
     {/* Hero section */}
     <Hero
       title="Blog"
-      description="Notes on what I'm building, carrying, and figuring out. Not a content schedule — just a record of what's happening with the tools and the work."
+      description="Notes on what I'm building, carrying, and figuring out. Not a content schedule - just a record of what's happening with the tools and the work."
       centered={true}
       maxWidth="md"
     />
