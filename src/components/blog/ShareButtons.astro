@@ -1,5 +1,7 @@
 ---
 // Component for social media sharing buttons
+import { getCleanPathname } from '../../utils/url-utils'
+
 interface Props {
   title: string
 }
@@ -7,7 +9,7 @@ interface Props {
 const { title } = Astro.props
 
 // Get the current URL for sharing
-const url = new URL(Astro.url.pathname, Astro.site).toString()
+const url = new URL(getCleanPathname(Astro.url.pathname), Astro.site).toString()
 
 // Prepare sharing URLs
 const shareUrls = {

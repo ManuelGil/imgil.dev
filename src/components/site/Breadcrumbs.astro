@@ -1,0 +1,60 @@
+---
+/**
+ * Visible breadcrumb trail + matching BreadcrumbList JSON-LD.
+ * The two must stay in sync: structured data should mirror what's
+ * actually rendered on the page.
+ */
+import { siteConfig } from '../../config/site'
+
+interface Crumb {
+  name: string
+  href?: string
+}
+
+interface Props {
+  items: Crumb[]
+}
+
+const { items } = Astro.props
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    ...(item.href && { item: new URL(item.href, siteConfig.baseUrl).toString() }),
+  })),
+}
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c')}
+/>
+<nav aria-label="Breadcrumb" class="mb-6">
+  <ol class="flex flex-wrap items-center gap-2 text-sm text-zinc-400">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-2">
+          {item.href ? (
+            <a href={item.href} class="transition-colors hover:text-primary">
+              {item.name}
+            </a>
+          ) : (
+            <span aria-current="page" class="text-zinc-200">
+              {item.name}
+            </span>
+          )}
+          {i < items.length - 1 && (
+            <span aria-hidden="true" class="text-zinc-600">
+              /
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

@@ -1,0 +1,23 @@
+---
+/**
+ * Paginated blog index routes (/blog/2/, /blog/3/, ...).
+ * Page 1 is served by /blog/ (src/pages/blog/index.astro) instead.
+ */
+import { getCollection } from 'astro:content'
+import BlogIndexPage from '../../components/blog/BlogIndexPage.astro'
+
+export async function getStaticPaths() {
+  const postsPerPage = 6
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft)
+  const totalPages = Math.ceil(allPosts.length / postsPerPage)
+
+  return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, i) => i + 2).map((page) => ({
+    params: { page: String(page) },
+    props: { page },
+  }))
+}
+
+const { page } = Astro.props
+---
+
+<BlogIndexPage page={page} />

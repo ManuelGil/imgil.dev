@@ -1,0 +1,149 @@
+---
+/**
+ * Blog index page content that displays all posts with pagination
+ * Shared by /blog/ (page 1) and /blog/[page]/ (page 2+) so pagination
+ * links resolve to real, crawlable static routes instead of a query
+ * string that a static build can't re-evaluate per request.
+ */
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+import { generateSeoMetadata } from '../../utils/seo-metadata'
+import { siteConfig } from '../../config/site'
+import Container from '../site/Container.astro'
+import Hero from '../Hero.astro'
+import BlogPostList from './BlogPostList.astro'
+import TagCloud from './TagCloud.astro'
+
+interface Props {
+  page?: number
+}
+
+const { page = 1 } = Astro.props
+const postsPerPage = 6
+
+// Get all published posts sorted by date
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+)
+
+// Pagination calculations
+const totalPages = Math.ceil(allPosts.length / postsPerPage)
+const startIndex = (page - 1) * postsPerPage
+const endIndex = startIndex + postsPerPage
+const paginatedPosts = allPosts.slice(startIndex, endIndex)
+
+// Mapea los posts a BlogPost[] para BlogPostList
+const posts = paginatedPosts.map((post) => ({
+  url: `/blog/${post.id}`,
+  frontmatter: {
+    title: post.data.title ?? '',
+    description: post.data.description ?? '',
+    date:
+      post.data.pubDate instanceof Date
+        ? post.data.pubDate.toISOString()
+        : (post.data.pubDate ?? ''),
+    updatedDate:
+      post.data.updatedDate instanceof Date
+        ? post.data.updatedDate.toISOString()
+        : (post.data.updatedDate ?? undefined),
+    tags: post.data.tags ?? [],
+    author: post.data.author ?? '',
+  },
+}))
+
+// Generate SEO metadata
+const pageSuffix = page > 1 ? ` - Page ${page}` : ''
+const seo = generateSeoMetadata({
+  title: `${siteConfig.emoji.blog || '📝'} Blog${pageSuffix} | ${siteConfig.name}`,
+  description: `Notes on building and carrying open source tools, by ${siteConfig.name}`,
+  type: 'website',
+  image: siteConfig.ogImage || '/images/og-image.jpg',
+})
+---
+
+<Layout
+  title={seo.title}
+  description={seo.description}
+  keywords="blog,software development,tech,programming,web development"
+  ogImage={seo.openGraph.image}
+>
+  <Container className="py-20">
+    {/* Hero section */}
+    <Hero
+      title="Blog"
+      description="Notes on what I'm building, carrying, and figuring out. Not a content schedule - just a record of what's happening with the tools and the work."
+      centered={true}
+      maxWidth="md"
+    />
+
+    <div class="mt-16 lg:flex lg:gap-12" id="latest-posts">
+      {/* Main content area */}
+      <div class="lg:w-2/3">
+        <div class="content-visibility-auto" style="contain-intrinsic-size: 500px">
+          <BlogPostList posts={posts} title="All Posts" currentPage={page} totalPages={totalPages} />
+        </div>
+      </div>
+
+      {/* Sidebar */}
+      <aside class="mt-12 lg:mt-0 lg:w-1/3">
+        {
+          allPosts.length > 0 && (
+            <div class="content-visibility-auto">
+              <TagCloud
+                tags={allPosts.flatMap((post) => post.data.tags || [])}
+                counts={allPosts.reduce(
+                  (acc, post) => {
+                    post.data.tags?.forEach((tag) => {
+                      acc[tag] = (acc[tag] || 0) + 1
+                    })
+                    return acc
+                  },
+                  {} as Record<string, number>,
+                )}
+                title="Browse by Topic"
+              />
+            </div>
+          )
+        }
+
+        <div
+          class="content-visibility-auto mt-8 rounded-xl border border-zinc-700 bg-zinc-800/50 p-6"
+        >
+          <h3 class="mb-4 text-xl font-bold">Elsewhere</h3>
+          <ul class="space-y-2 text-zinc-400">
+            <li>
+              <a
+                href="https://github.com/ManuelGil"
+                class="transition-colors hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://twitter.com/imgildev"
+                class="transition-colors hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Twitter
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/imgildev"
+                class="transition-colors hover:text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </Container>
+</Layout>

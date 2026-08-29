@@ -34,6 +34,8 @@
  * ```
  */
 
+import { slugifyTag } from '../../utils/slug-utils'
+
 const {
   tags = [],
   counts = {},
@@ -66,7 +68,7 @@ const sortedTags = [...tags].sort()
 
         {sortedTags.map((tag) => (
           <a
-            href={`/blog/tag/${tag}`}
+            href={`/blog/tag/${slugifyTag(tag)}`}
             class={`rounded-full px-3 py-1 text-sm transition-all duration-300 will-change-transform
             ${
               activeTag === tag

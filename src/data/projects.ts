@@ -1,404 +1,213 @@
 /**
- * Represents a project as something that exists and has been carried over time.
- * This is not a product model and does not imply support or active maintenance.
+ * Projects shown on the Open Source Projects page.
+ *
+ * A selection, not an inventory. Something earns a place here when it shows
+ * what I've worked on or why it was interesting - not because it's recent,
+ * popular, or still maintained.
  */
 export interface Project {
   title: string
   description: string
   link: string
-  details: string[]
-  category: string
-  tech?: string[]
+  category: CategoryId
 }
 
 /**
- * Categories are descriptive, not promises of activity.
+ * Groups follow the lines of work these projects actually came out of.
  */
+export type CategoryId = 'editor' | 'linux' | 'php' | 'windows' | 'odds-and-ends'
+
 export interface Category {
-  id: string
+  id: CategoryId
   name: string
   description: string
 }
 
 export const categories: Category[] = [
   {
-    id: 'vscode',
-    name: 'VSCode Extensions',
-    description:
-      'Extensions created for Visual Studio Code over time. Some are active, some are stable, some are slow or paused. Attention varies and is not guaranteed.',
+    id: 'editor',
+    name: 'Inside the Editor',
+    description: "Most of what I've built lives in VS Code. These are the ones worth pointing at.",
   },
   {
-    id: 'npm',
-    name: 'NPM Packages & CLI Tools',
+    id: 'linux',
+    name: 'On Linux',
     description:
-      'Small Node.js packages and CLI tools published to solve specific problems. Many remain minimal and unchanged once stable.',
-  },
-  {
-    id: 'windows',
-    name: 'Windows Utilities',
-    description:
-      'Utilities created to solve real Windows problems in IT and sysadmin contexts. These tools exist because something was broken.',
+      'Newer ground for me: Debian, defaults, and deciding what actually belongs on a machine.',
   },
   {
     id: 'php',
-    name: 'PHP Tools & Projects',
-    description:
-      'PHP-related tools and boilerplates created at different points in time. Many exist as reference implementations or practical utilities.',
+    name: 'The PHP Years',
+    description: 'Where I started. PHP, Moodle, and frameworks that never got much tooling.',
   },
   {
-    id: 'browser',
-    name: 'Browser Extensions',
-    description:
-      'Small browser extensions created to remove friction in specific workflows.',
+    id: 'windows',
+    name: 'When Windows Broke',
+    description: 'Years of IT support left me with scripts for the days something is badly broken.',
+  },
+  {
+    id: 'odds-and-ends',
+    name: 'Odds and Ends',
+    description: "Things that don't group with anything else.",
   },
 ]
 
 export const projects: Project[] = [
   // ─────────────────────────────────────────────
-  // VSCode Extensions
+  // Inside the Editor
   // ─────────────────────────────────────────────
 
   {
+    title: 'Weave Context',
+    description:
+      "Markdown notes that behave like code. Wikilinks become real editor symbols, so Go to Definition, Find References and Rename work across your documentation instead of stopping at the file boundary. There's a desktop dashboard for looking at a repository as a graph, and CodeContext+, which pulls the same notes up next to the line of code they explain. This is what I've been thinking about most lately.",
+    link: 'https://github.com/ManuelGil/vscode-weave-context',
+    category: 'editor',
+  },
+  {
     title: 'JSON Flow',
     description:
-      'A VSCode extension for exploring and visualizing complex JSON structures. Created to solve a real problem. Activity varies.',
-    details: [
-      'Visual exploration of nested data',
-      'Trade-offs between clarity and performance',
-      'Changed over time based on use',
-    ],
+      'Turns a JSON file into a graph you can pan around. I built it because I kept opening config files that were too nested to read from top to bottom.',
     link: 'https://github.com/ManuelGil/vscode-json-flow',
-    category: 'vscode',
-    tech: ['TypeScript', 'VSCode API'],
+    category: 'editor',
   },
   {
     title: 'Auto Barrel',
     description:
-      'A VSCode extension originally created by someone else and later continued. Focused on reducing friction around barrel files while preserving its original identity.',
-    details: [
-      'Continuation of an existing project',
-      'Stability over constant change',
-      'Respect for prior users and workflows',
-    ],
+      "Creates and updates barrel files so you don't have to. Someone else started it and I picked it up, which mostly means resisting the urge to redesign it for people who were already happy with it.",
     link: 'https://github.com/ManuelGil/vscode-auto-barrel',
-    category: 'vscode',
+    category: 'editor',
   },
   {
-    title: 'Astro File Generator',
+    title: 'T3 Stack / Next.js File Generator',
     description:
-      'A small extension to scaffold files for Astro projects. Created as an experiment around DX and structure.',
-    details: [
-      'Exploration of Astro workflows',
-      'Lightweight by design',
-      'May evolve or remain as-is',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-astro-generator',
-    category: 'vscode',
+      "Scaffolds files for Next.js and T3 Stack projects - NextAuth, Prisma, tRPC. It exists because a new router shouldn't start by copying an old one.",
+    link: 'https://github.com/ManuelGil/vscode-nextjs-generator',
+    category: 'editor',
+  },
+  {
+    title: 'NestJS Tooling',
+    description:
+      'Nine extensions for NestJS: a file generator built on the CLI, a snippets library, an extension pack, and snippets for Swagger, Prisma, TypeORM, Mongoose, MikroORM and Sequelize. They grew one at a time out of real NestJS work.',
+    link: 'https://github.com/ManuelGil/vscode-nestjs-generator',
+    category: 'editor',
   },
   {
     title: 'Angular File Generator',
     description:
-      'A file generator extension for Angular projects, created to enforce structure and reduce repetitive setup.',
-    details: [
-      'Opinionated structure',
-      'Built for personal workflows',
-      'Kept stable once usable',
-    ],
+      "Generates Angular files from the editor using the same schematics as the CLI, for the times you'd rather not leave the file tree.",
     link: 'https://github.com/ManuelGil/vscode-angular-generator',
-    category: 'vscode',
-  },
-  {
-    title: 'NestJS File Generator',
-    description:
-      'A generator for NestJS projects focused on consistency and reducing manual file creation.',
-    details: [
-      'Structure-first approach',
-      'Based on personal conventions',
-      'Not intended as a universal solution',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-nestjs-generator',
-    category: 'vscode',
-  },
-  {
-    title: 'VueJS File Generator',
-    description:
-      'A VSCode extension to generate files and components for VueJS projects.',
-    details: [
-      'Structure-oriented',
-      'Created to reduce repetition',
-      'Scope limited to VueJS workflows',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-vuejs-generator',
-    category: 'vscode',
-  },
-  {
-    title: 'NestJS Snippets',
-    description:
-      'A collection of NestJS snippets for VSCode, created to reduce boilerplate.',
-    details: [
-      'Editor-level shortcuts',
-      'Low surface area',
-      'Minimal expectations',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-nestjs-snippets',
-    category: 'vscode',
-  },
-  {
-    title: 'NestJS Swagger Snippets',
-    description:
-      'Snippets for writing Swagger/OpenAPI definitions in NestJS projects.',
-    details: [
-      'Focused on repetitive patterns',
-      'Documentation-oriented',
-      'Exists as a helper, not a framework',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-nestjs-swagger-snippets',
-    category: 'vscode',
-  },
-  {
-    title: 'NestJS MikroORM Snippets',
-    description:
-      'Snippets to assist with MikroORM usage in NestJS projects.',
-    details: [
-      'ORM-specific helpers',
-      'Created for real projects',
-      'Stable once functional',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-nestjs-mikroorm-snippets',
-    category: 'vscode',
+    category: 'editor',
   },
   {
     title: 'CodeLog+',
     description:
-      'A VSCode extension to insert and manage log statements across different languages.',
-    details: [
-      'Debugging-focused',
-      'Workflow-oriented',
-      'Created to reduce manual effort',
-    ],
+      'Inserts, removes and highlights log statements across languages. CodeMark+ is its sibling, for TODO and FIXME comments. Small problems, but I run into them every day.',
     link: 'https://github.com/ManuelGil/vscode-code-log-plus',
-    category: 'vscode',
+    category: 'editor',
   },
   {
-    title: 'CodeMark+',
+    title: 'Tooling for Extension Authors',
     description:
-      'A VSCode extension to insert and highlight custom code comments.',
-    details: [
-      'Navigation aid',
-      'Low complexity',
-      'Built for personal workflows',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-code-mark-plus',
-    category: 'vscode',
+      'A starter kit for writing VS Code extensions, plus the pieces I needed around it: a library for querying the Marketplace, a CLI for installing extensions from npm, and a browser extension that adds a one-click VSIX download. Publish enough extensions and the tooling around publishing becomes its own project.',
+    link: 'https://github.com/ManuelGil/vscode-extension-starter-advanced',
+    category: 'editor',
+  },
+
+  // ─────────────────────────────────────────────
+  // On Linux
+  // ─────────────────────────────────────────────
+
+  {
+    title: 'Amonite',
+    description:
+      'A Debian-derived distribution built around one question: why should this exist by default? Every package and setting has to earn its place and still make sense thirty days in, not just on the day you install it. Its documentation lives in a separate vault of Markdown notes, which is my own wikilink habit turned into the project handbook.',
+    link: 'https://github.com/ManuelGil/amonite',
+    category: 'linux',
+  },
+  {
+    title: 'Amonite Mobile',
+    description:
+      "The same idea pointed at a phone: a Debian image for arm64 devices with a touchscreen desktop and Android apps through Waydroid. Devices are described in files rather than patched into the image, so adding one is a new descriptor and not a new build. It boots in an emulator and hasn't been near real hardware yet, which the README says before anything else.",
+    link: 'https://github.com/ManuelGil/amonite-mobile',
+    category: 'linux',
+  },
+  {
+    title: 'Cedra',
+    description:
+      'A GTK app for Debian workstations. APT tells you which package to install; Cedra deals with what the machine should actually do with it - Git defaults, browser policies, desktop handlers, fonts - and shows you the changes before applying them.',
+    link: 'https://github.com/ManuelGil/cedra',
+    category: 'linux',
+  },
+
+  // ─────────────────────────────────────────────
+  // The PHP Years
+  // ─────────────────────────────────────────────
+
+  {
+    title: 'CodeIgniter 4 Tooling',
+    description:
+      'Commands and snippets for CodeIgniter 4, plus boilerplates pairing it with Blade, Twig and Mustache, and a smaller set for KumbiaPHP. Neither framework gets much editor tooling, which is most of why I wrote it.',
+    link: 'https://github.com/ManuelGil/vscode-codeigniter4-spark',
+    category: 'php',
   },
   {
     title: 'Moodle Pack',
     description:
-      'A set of VSCode tools and snippets for Moodle development.',
-    details: [
-      'Education-focused',
-      'Created for real Moodle work',
-      'Scope limited to Moodle development',
-    ],
+      "Snippets and commands for Moodle plugin development, across PHP, XML and Mustache. A lot of my early work was Moodle work, and it's a corner of the ecosystem with very few tools in it.",
     link: 'https://github.com/ManuelGil/vscode-moodle-snippets',
-    category: 'vscode',
+    category: 'php',
+  },
+  {
+    title: 'REST API with Slim',
+    description:
+      "A REST API on Slim 3 and MySQL, from 2017. It's archived now, but it got forked plenty, which suggests people used it the way I hoped: as something to read before writing their own.",
+    link: 'https://github.com/ManuelGil/REST-Api-with-Slim-PHP',
+    category: 'php',
+  },
+  {
+    title: 'Simple Social Network',
+    description:
+      "A small social network in PHP, MySQL, Bootstrap 3 and Vue 2. Very much of its time, and archived, but it's the clearest record I have of what I was building before any of the tooling work started.",
+    link: 'https://github.com/ManuelGil/Simple-Social-Network',
+    category: 'php',
   },
 
   // ─────────────────────────────────────────────
-  // NPM / CLI
-  // ─────────────────────────────────────────────
-
-  {
-    title: 'vscode-marketplace-client',
-    description:
-      'A Node.js client to interact with the VSCode Marketplace API.',
-    details: [
-      'API wrapper',
-      'Created to automate internal tooling',
-      'Scope limited to marketplace data',
-    ],
-    link: 'https://github.com/ManuelGil/vscode-marketplace-client',
-    category: 'npm',
-    tech: ['Node.js'],
-  },
-  {
-    title: 'vscplugit',
-    description:
-      'A CLI tool to install or uninstall VSCode extensions from NPM.',
-    details: [
-      'Automation-oriented',
-      'Built for repeatable workflows',
-      'Exists as a utility',
-    ],
-    link: 'https://github.com/ManuelGil/vscplugit',
-    category: 'npm',
-  },
-  {
-    title: 'nspin',
-    description:
-      'A minimal Node.js spinner utility for terminal applications.',
-    details: [
-      'Minimal surface area',
-      'Focused on UX',
-      'Stable once functional',
-    ],
-    link: 'https://github.com/ManuelGil/nspin',
-    category: 'npm',
-  },
-  {
-    title: 'nspin-esm',
-    description:
-      'A lightweight spinner utility built for native ESM environments.',
-    details: [
-      'ESM-first',
-      'Minimal implementation',
-      'Designed to stay small',
-    ],
-    link: 'https://github.com/ManuelGil/nspin-esm',
-    category: 'npm',
-  },
-  {
-    title: 'nspin-bun',
-    description:
-      'A spinner utility adapted for Bun environments.',
-    details: [
-      'Bun-specific experiment',
-      'Minimal scope',
-      'Exists as an adaptation, not a rewrite',
-    ],
-    link: 'https://github.com/ManuelGil/nspin-bun',
-    category: 'npm',
-  },
-
-  // ─────────────────────────────────────────────
-  // Windows Utilities
+  // When Windows Broke
   // ─────────────────────────────────────────────
 
   {
     title: 'Reset Windows Update Tool',
     description:
-      'A Windows utility created to repair broken Windows Update components. Carried forward because people still rely on it.',
-    details: [
-      'Created for a real and recurring problem',
-      'Carries weight due to its nature',
-      'Changes are made carefully, if at all',
-    ],
+      "Repairs Windows Update when it breaks and the usual advice doesn't help. It started as a batch script in 2017 and turned into a small suite with its own site and documentation. This repository is archived; the scripts and the site carry on under their own organisation. It's still the most-used thing I've made.",
     link: 'https://github.com/ManuelGil/Reset-Windows-Update-Tool',
-    category: 'windows',
-  },
-  {
-    title: 'Reset WSUS Client ID',
-    description:
-      'A script to reset the WSUS client identifier in Windows environments.',
-    details: [
-      'Enterprise-focused utility',
-      'Created for troubleshooting',
-      'Exists for specific failure cases',
-    ],
-    link: 'https://github.com/wureset-tools/reset-wsus-client-id',
     category: 'windows',
   },
   {
     title: 'Uninstall Office 2016',
     description:
-      'A batch-based utility to fully remove Office installations when standard uninstall paths fail.',
-    details: [
-      'Failure-recovery focused',
-      'Created for IT environments',
-      'Exists because defaults are insufficient',
-    ],
-    link: 'https://github.com/ManuelGil/uninstall-office-2016',
+      'Removes an Office install when the official uninstaller gives up. Written during years of IT support, for the specific afternoon where nothing else works.',
+    link: 'https://github.com/ManuelGil/Uninstall-Office-2016',
     category: 'windows',
   },
 
   // ─────────────────────────────────────────────
-  // PHP Projects
+  // Odds and Ends
   // ─────────────────────────────────────────────
 
   {
-    title: 'Project Skeleton (PHP)',
+    title: 'nspin',
     description:
-      'A minimal PHP project skeleton created to avoid repeating the same setup across projects.',
-    details: [
-      'Opinionated baseline',
-      'Reuse over reinvention',
-      'Exists primarily as reference',
-    ],
-    link: 'https://github.com/ManuelGil/project-skeleton',
-    category: 'php',
+      "A terminal spinner with no dependencies, built on what Node already gives you. There are ESM and Bun ports as well. It's a tiny thing, but writing one properly is a good exercise in not reaching for a package.",
+    link: 'https://github.com/ManuelGil/nspin',
+    category: 'odds-and-ends',
   },
   {
-    title: 'CodeIgniter 4 with Blade',
+    title: 'Git and GitHub Workshop',
     description:
-      'A CodeIgniter 4 starter integrating the Blade template engine.',
-    details: [
-      'Template integration example',
-      'Created to explore alternatives',
-      'Exists as a starter reference',
-    ],
-    link: 'https://github.com/ManuelGil/ci4-blade',
-    category: 'php',
-  },
-  {
-    title: 'CodeIgniter 4 with Mustache',
-    description:
-      'A CodeIgniter 4 starter using Mustache templates.',
-    details: [
-      'Experiment around templating',
-      'Minimal scope',
-      'Kept as a reference',
-    ],
-    link: 'https://github.com/ManuelGil/ci4-mustache',
-    category: 'php',
-  },
-  {
-    title: 'CodeIgniter 4 with Twig',
-    description:
-      'A CodeIgniter 4 starter using Twig templates.',
-    details: [
-      'Template engine comparison',
-      'Reference implementation',
-      'Exists as reference, not as product',
-    ],
-    link: 'https://github.com/ManuelGil/ci4-twig',
-    category: 'php',
-  },
-
-  // ─────────────────────────────────────────────
-  // Browser Extensions
-  // ─────────────────────────────────────────────
-
-  {
-    title: 'One-Click VSIX',
-    description:
-      'A browser extension to download VSCode VSIX files with a single click.',
-    details: [
-      'Solves a specific workflow problem',
-      'Small scope by design',
-      'Unchanged once functional',
-    ],
-    link: 'https://github.com/ManuelGil/chrome-one-click-vsix',
-    category: 'browser',
-  },
-]
-
-/**
- * Contributions are described without numbers or claims of regular activity.
- */
-export const contributionData = [
-  {
-    title: 'Pull Requests & Reviews',
-    description:
-      'Occasional pull requests, reviews, and discussions in other open source projects when something felt worth fixing or improving.',
-  },
-  {
-    title: 'Documentation',
-    description:
-      'Small documentation improvements made when context was missing or confusing.',
-  },
-  {
-    title: 'Community Interaction',
-    description:
-      'Participation in issues and discussions without ongoing commitments or obligations.',
+      "Materials from a Git and GitHub workshop I ran for the Paradigma Indie community, in Spanish, with a video playlist alongside it. Not software, but it's some of the open source work I'm most glad I did.",
+    link: 'https://github.com/ManuelGil/taller-git-y-github',
+    category: 'odds-and-ends',
   },
 ]

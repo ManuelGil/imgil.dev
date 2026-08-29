@@ -1,0 +1,24 @@
+# Manuel Gil
+
+> Building and carrying open source tools over time. Some are active, some are quiet, all are published with responsibility.
+
+## Main Pages
+
+- [Home](https://imgil.dev/): Software developer and open source maintainer building and carrying developer tools over time.
+- [About](https://imgil.dev/about): Background, what I actually work on, and the tools and languages I use.
+- [Open Source Projects](https://imgil.dev/open-source-projects): A selection of the open source work I've done - VS Code extensions, a Debian-based distribution, PHP and Moodle tooling, and Windows repair scripts.
+- [Talks & Communities](https://imgil.dev/talks-communities): Talks and events where I've shared what I've learned about open source and the tools I've built.
+- [Support](https://imgil.dev/support): How to support the ongoing maintenance of the open source tools I carry.
+
+## Blog
+
+- [Blog Index](https://imgil.dev/blog): Notes on building and carrying open source tools.
+- [Getting Started with Web Development](https://imgil.dev/blog/mi-primer-post): A comprehensive guide to starting your journey in web development, covering essential technologies and best practices.
+- [Optimizing Astro Sites for Performance](https://imgil.dev/blog/optimizing-astro-sites): Learn how to improve Core Web Vitals and overall performance in your Astro projects.
+
+## Contact
+
+- GitHub: https://github.com/ManuelGil
+- LinkedIn: https://www.linkedin.com/in/imgildev
+- Twitter/X: https://twitter.com/imgildev
+- Email: support@imgil.dev

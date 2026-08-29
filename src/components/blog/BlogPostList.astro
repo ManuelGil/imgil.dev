@@ -5,6 +5,7 @@
  * @component
  */
 import { formatDate, sortPostsByDate } from '../../utils/blog-utils'
+import { slugifyTag } from '../../utils/slug-utils'
 import Section from '../site/Section.astro'
 import SectionHeader from '../site/SectionHeader.astro'
 
@@ -80,8 +81,10 @@ const sortedPosts = sortPostsByDate(posts)
               <a
                 href={
                   activeTag
-                    ? `/blog/tag/${activeTag}/${currentPage - 1}`
-                    : `/blog/${currentPage - 1}`
+                    ? `/blog/tag/${slugifyTag(activeTag)}/${currentPage - 1}`
+                    : currentPage - 1 === 1
+                      ? '/blog'
+                      : `/blog/${currentPage - 1}`
                 }
                 class="inline-flex items-center justify-center rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-800"
               >

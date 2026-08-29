@@ -24,6 +24,7 @@
 import Footer from '../components/site/Footer.astro'
 import Navigation from '../components/site/Navigation.astro'
 import { siteConfig } from '../config/site'
+import { getCleanPathname } from '../utils/url-utils'
 import '../styles/global.css'
 
 /**
@@ -57,7 +58,9 @@ const {
 } = Astro.props
 
 // Get current path for navigation active state
-const currentPath = Astro.url.pathname
+// (normalized: static builds resolve Astro.url.pathname to the physical
+// .html output filename, not the clean URL every internal link targets)
+const currentPath = getCleanPathname(Astro.url.pathname)
 
 // Generate canonical URL
 const canonicalURL = new URL(currentPath, siteConfig.baseUrl)
@@ -149,11 +152,18 @@ const canonicalURL = new URL(currentPath, siteConfig.baseUrl)
     </script>
   </head>
   <body class="flex min-h-screen flex-col bg-zinc-900 text-white">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
+    >
+      Skip to content
+    </a>
+
     <!-- Main navigation using the new component -->
     <Navigation currentPath={currentPath} />
 
     <!-- Main content area with content-visibility optimization -->
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
 
