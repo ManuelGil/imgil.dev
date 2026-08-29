@@ -17,7 +17,6 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
     assets: '_astro',
-    assetsPrefix: '/_astro',
     format: 'file',
     experimental: {
       optimizeHoistedScript: true,
@@ -28,12 +27,6 @@ export default defineConfig({
       cssCodeSplit: true,
       reportCompressedSize: false,
       chunkSizeWarningLimit: 1000,
-      rollupOptions: {
-        output: {
-          assetFileNames: 'assets/[hash][extname]',
-          chunkFileNames: 'assets/[hash].js',
-        },
-      },
       minify: 'terser',
       terserOptions: {
         ecma: 2020,
