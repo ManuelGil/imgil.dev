@@ -1,2 +1,4 @@
+packageManager: pnpm@11.0.0
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true
+  sharp: true
